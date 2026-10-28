@@ -1,29 +1,24 @@
-# 30-day roadmap
+# Roadmap (full scope)
 
-Assumed start: Phase 1 begins on the day the owner approves Phase 0 (Day 1 below).
-Days are working days of the calendar. Schedule assumes one developer and about 6 focused hours per day. Any slip is handled by cutting Should/Could items, not by cutting security or tests.
+Status: Full scope accepted by owner (decision D-08). No feature is cut from the requirements.
 
-| Days | Phase | Deliverables | Acceptance (summary) |
-|---|---|---|---|
-| 1-2 | Phase 0: docs, architecture, scope | All Phase 0 docs, ADR-0001 to ADR-0004, git history | Owner approves scope and this roadmap |
-| 3-6 | Phase 1: foundation | Monorepo layout, lint/format/typecheck, Fastify skeleton, React skeleton, Kysely + migrations, smartthink_app role, setup script, first test run | `npm run check` passes on a clean clone; migration up/down works |
-| 7-12 | Phase 2: auth and tenancy | Login, sessions, rate limit, company and membership, roles, invitations, deactivation, audit log, tenant-isolation test suite | All AU-, CO-, PA- items pass; cross-tenant test suite green |
-| 13-18 | Phase 3: recruitment core | Clients, jobs, candidates, pipeline stages, configurable overseas stages, interviews (S), activity history, search and pagination, dashboard counts | All CA-, CL-, JO-, PL-, AC-, SE- items pass |
-| 19-24 | Phase 4: documents and CV | Secure upload and download, document review, CV builder with 3 templates, PDF export, visual and programmatic PDF tests | All DO-, CV- items pass; PDF fixtures reviewed |
-| 25-26 | Phase 5: export and reports | CSV export with permission and audit, basic pipeline report (RE-01). Notifications and extras are cut unless ahead of schedule | EX- items pass |
-| 27-28 | Phase 6: hardening | Security headers, dependency audit, CSRF check, rate-limit review, performance check on 10k candidate seed, backup and restore test | Restore test succeeds and is logged; audit findings fixed or recorded |
-| 29-30 | Phase 7: deployment and release | Deployment guide, server setup script, user guide, operations runbook, release notes, final verification | Clean install on a second machine or VM succeeds |
+## Timing
+The owner's 30-day target is recorded as a goal, not a promise. Estimate for the full scope with one developer at about 6-8 focused hours per day: roughly 6-8 weeks. This is an estimate. It is re-measured at the end of each phase and the owner is told the updated figure.
+
+## Phases and acceptance
+| Phase | Scope | Acceptance |
+|---|---|---|
+| 0 | Audit, docs, architecture, roadmap | Owner review and written confirmation |
+| 1 | Foundation: monorepo, lint, typecheck, Fastify, React, Kysely, migrations, setup script, test DB | `npm run check` passes on clean clone; migration up/down works |
+| 2 | Auth, sessions, companies, memberships, roles, invitations, audit log, RLS spike, tenant isolation suite | All AU-, CO-, PA-, AL- items; all TI- tests pass |
+| 3 | Clients, jobs, candidates, configurable pipeline and overseas stages, interviews, history, search, pagination, dashboard | All CA-, CL-, JO-, PL-, IN-, AC-, SE-, DA- items |
+| 4 | Documents (secure upload/download, review), CV builder (3+ templates, edit, reorder, review gate), PDF export and PDF tests | All DO-, CV- items; PDF fixture review recorded |
+| 5 | CSV export with permission and audit, pipeline report, notifications, optional features | All EX-, RE-, and remaining S/C items |
+| 6 | Security hardening, dependency audit, performance on seeded data, backup and restore test | Restore test passes and is logged; audit findings fixed or recorded |
+| 7 | Deployment guide, server script, user guide, operations runbook, clean install test on a second machine or VM | Clean install succeeds and is logged |
 
 ## Dependencies
-- Phase 2 needs Phase 1 (database and migrations).
-- Phase 3 needs Phase 2 (every record needs company scope).
-- Phase 4 needs Phase 3 (documents attach to candidates).
-- Phase 6 needs everything before it, so buffer days are placed after Phase 4 and 5.
+Phase 2 needs 1. Phase 3 needs 2. Phase 4 needs 3. Phase 5 needs 3 and 4. Phase 6 needs everything before it. Phase 7 needs 6.
 
-## Buffer and cut rules
-- Buffer: about 2 days are spread across Phases 2-4.
-- If behind by more than 2 days at the end of Phase 4, Phase 5 is reduced to CSV export only.
-- Cut order: C items, then S items, then reporting. Never cut: tenant isolation tests, audit of privileged actions, PDF review gate, restore test.
-
-## Honest risk statement
-One month is enough for a secure, tested MVP covering the Must items above. It is not enough for every item in the original brief at production polish. The owner must accept the cut rules in RISKS_AND_DECISIONS.md.
+## Re-planning rule
+At the end of each phase: actual days, remaining estimate, and the owner decides whether to continue at the same pace, add time, or add effort. No security or test step is removed to save time.
