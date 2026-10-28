@@ -1,0 +1,37 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Secrets: never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local data: real candidate files and backups must never enter Git
+storage/
+uploads/
+backups/
+*.dump
+*.backup
+*.sql.gz
+
+# NOTE: *.sql is intentionally NOT ignored. Versioned migrations are committed.
+
+# Logs and test artifacts
+*.log
+test-results/
+playwright-report/
+
+# Editor and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
