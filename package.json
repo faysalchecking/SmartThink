@@ -1,0 +1,17 @@
+{
+  "name": "smartthink",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-tenant recruitment ATS (modular monolith)",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
+  },
+  "scripts": {
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+  }
+}
