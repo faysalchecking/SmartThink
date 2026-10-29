@@ -3,39 +3,38 @@
 Last updated: 2026-10-28
 
 ## Phase 0: Audit, scope, documentation, architecture, roadmap
-Status: IN PROGRESS (waiting for owner review)
+Status: DOCUMENTATION COMPLETE, WAITING FOR OWNER CONFIRMATION
 
-### Completed
-- Windows environment audit (Windows 11 Home, Node v24.21.0, npm 11.19.0, Git 2.55.0, PostgreSQL 18.6 running on port 5432)
-- Project root `D:\SmartThink` confirmed empty before setup
-- GitHub repo `faysalchecking/SmartThink` confirmed empty (no branches or commits)
-- Folder structure created: `apps/api`, `apps/web`, `packages/shared`, `scripts`, `tests`, `infra`, `docs/ADR`
-- `.gitignore` created (corrected: `*.sql` is not ignored, because migrations must be committed)
-- `.env.example` created
-- `docs/ADR/ADR-0001-stack.md`
-- `README.md`
-- `docs/PHASE_STATUS.md`
+### Completed (verified with real output)
+- Windows audit: Windows 11 Home 64-bit, Node v24.21.0, npm 11.19.0, Git 2.55.0, PostgreSQL 18.6 (service running, port 5432 reachable).
+- `D:\SmartThink` confirmed empty before setup.
+- GitHub repo `faysalchecking/SmartThink` confirmed empty before the first push.
+- Local Git repository initialised on branch `main`.
+- Database `smartthink_dev` and role `smartthink_app` created. Role verified: not superuser, no BYPASSRLS. Runtime user cannot create tables (correct).
+- `.env` created locally, ignored by Git (`git check-ignore` confirmed line 9 of `.gitignore`).
+- Commits pushed to origin/main: `c9b0343`, `205eee5`, `983b4d5`. Later commits: see the output recorded in CHANGELOG.md.
 
-### Pending in Phase 0
-- `docs/RISKS_AND_DECISIONS.md` (created with this phase)
-- `docs/PRODUCT_VISION.md`, `docs/REQUIREMENTS.md`, `docs/SCOPE.md`
-- `docs/ARCHITECTURE.md`, `docs/SYSTEM_MAP.md`, `docs/WORKFLOW.md`
-- `docs/DATABASE_SCHEMA.md`, `docs/API_SPEC.md`
-- `docs/SECURITY.md`, `docs/TENANT_ISOLATION.md`
-- `docs/TESTING.md`, `docs/DEPLOYMENT.md`, `docs/BACKUP_RESTORE.md`
-- `docs/INSTALLATION.md`, `docs/USER_GUIDE.md`, `docs/OPERATIONS.md`
-- `docs/ROADMAP.md` (30-day schedule)
-- `docs/CHANGELOG.md`
-- `docs/ADR/ADR-0002` to `ADR-0004` (database access, tenant isolation, file storage)
-- Local PostgreSQL database and least-privilege role (not yet created, needs approval)
+### Written as documentation (not yet tested, not implemented)
+README, PRODUCT_VISION, REQUIREMENTS, ROADMAP, ARCHITECTURE, SYSTEM_MAP, WORKFLOW, SECURITY, TENANT_ISOLATION, DATABASE_SCHEMA, API_SPEC, TESTING, DEPLOYMENT, BACKUP_RESTORE, INSTALLATION, USER_GUIDE, OPERATIONS, CHANGELOG, RISKS_AND_DECISIONS, ADR-0001 to ADR-0004.
 
-### Git
-- Repository: local only, initialised after `.gitignore` was created
-- Remote: none. The owner will add the remote and push.
+### Not done in Phase 0
+- ADR-0005 (deployment and PDF renderer): planned for Phase 4 and Phase 7.
+- Owner confirmation of this phase.
+- Git status and push result of the final Phase 0 commit (owner to paste output).
 
-### Suggested commit message (after Phase 0 is approved)
-`docs: add phase 0 architecture decisions, scope, and project documentation`
+### Open items (owner action)
+1. Revoke the GitHub token that was pasted in chat earlier.
+2. Change any password or secret that was pasted in chat. Current `.env` values were never pasted by the owner in the verified output, but treat the earlier pasted values as exposed.
+3. Confirm Git commit identity.
+4. Approve `smartthink_test` database creation before Phase 1.
+
+### Phase 1 (not started)
+Starts only after the owner reviews Phase 0 and confirms in writing.
+
+## Git commit message suggestion (Phase 0 final)
+`docs: complete phase 0 documentation (API, workflows, system map, installation, deployment, operations)`
 
 ## Known limitations
-- Phase 0 has verified the machine and PostgreSQL server only. The application database and role have not been created yet.
-- Hosting costs have not been verified and are not stated as facts.
+- Phase 0 verified only the machine and the PostgreSQL server. Nothing in the application has been built or tested.
+- Hosting and backup costs are categories only. No prices were verified.
+- 30-day delivery of the full scope is not promised. Estimate: about 6 to 8 weeks, re-measured after each phase.
