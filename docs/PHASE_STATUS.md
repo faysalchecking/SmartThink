@@ -44,9 +44,20 @@ Commits: 85ea332 (latest push to origin/main)
 Known limitations: no application code built or tested. Backup restore not verified. Hosting costs not verified.
 
 ## Phase 1: Foundation
-Status: IN PROGRESS
-- Laravel 13.37.0 installed (commit 1e77001).
-- pgsql (smartthink_app) and pgsql_migrator (smartthink_migrator) connections verified.
-- Runtime role cannot CREATE TABLE in schema public (verified, permission denied).
-- Default Laravel migrations applied as smartthink_migrator; table owner is smartthink_migrator.
-- Pending: schema_health migration, health endpoint, PHPUnit on smartthink_test, Pint, Larastan, scripts\check.ps1, frontend setup.
+Status: COMPLETE, PENDING OWNER APPROVAL
+
+Evidence (owner's machine, 2026-10-29):
+- scripts\check.ps1: ALL CHECKS PASSED
+- Backend: Pint PASS (29 files), Larastan level 6 no errors, PHPUnit 3 passed on smartthink_test
+- Migration schema_health: up, down, up verified on smartthink_test
+- smartthink_app cannot CREATE TABLE (permission denied, verified)
+- Frontend: lint, format, typecheck, build pass. npm audit --omit=dev: 0 vulnerabilities
+- Health endpoint GET /api/v1/health returns ok
+
+Versions: Laravel 13.37.0, Larastan 3.13.0, React 19.3.1, Vite 8.3.4, TypeScript 6.0.3, Vitest 5.0.4, PHP 8.5.11, PostgreSQL 18.6
+
+Known limitations:
+- Frontend has no test files yet (npm test uses passWithNoTests). Real tests start in Phase 2.
+- Full npm audit (including dev tools) shows 11 moderate issues, all in development tooling. Recorded in RISKS_AND_DECISIONS.md, not fixed with npm audit fix --force.
+- Tenant isolation, authentication, and RLS are not started.
+- Backup and restore are not tested.
