@@ -38,3 +38,15 @@ Status: NOT STARTED. Starts only after Phase 0 is confirmed.
 - Nothing in the application is built, installed, or tested. The Laravel and React versions are not yet pinned.
 - Hosting and backup costs are categories only. No price is verified.
 - The 30-day target for the full scope is not promised. Estimate: about 6 to 8 weeks, re-measured each phase.
+## Phase 0: Audit, scope, documentation, architecture, roadmap
+Status: APPROVED BY OWNER for Laravel + React + PostgreSQL stack (2026-10-29)
+Commits: 85ea332 (latest push to origin/main)
+Known limitations: no application code built or tested. Backup restore not verified. Hosting costs not verified.
+
+## Phase 1: Foundation
+Status: IN PROGRESS
+- Laravel 13.37.0 installed (commit 1e77001).
+- pgsql (smartthink_app) and pgsql_migrator (smartthink_migrator) connections verified.
+- Runtime role cannot CREATE TABLE in schema public (verified, permission denied).
+- Default Laravel migrations applied as smartthink_migrator; table owner is smartthink_migrator.
+- Pending: schema_health migration, health endpoint, PHPUnit on smartthink_test, Pint, Larastan, scripts\check.ps1, frontend setup.

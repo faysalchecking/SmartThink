@@ -99,7 +99,6 @@ return [
             'sslmode' => env('DB_SSLMODE', 'prefer'),
         ],
 
-        
         'pgsql_migrator' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
