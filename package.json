@@ -3,15 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "description": "Multi-tenant recruitment ATS (modular monolith)",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "engines": {
-    "node": ">=24.0.0 <25.0.0"
+    "node": ">=24.0.0 <25.0.0",
+    "npm": ">=11.0.0"
   },
   "scripts": {
-    "lint": "npm run lint --workspaces --if-present",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,mjs,json,html,css}\" \"*.{json,mjs}\"",
+    "format:check": "prettier --check \"apps/**/*.{ts,tsx,mjs,json,html,css}\" \"*.{json,mjs}\"",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+    "migrate:up": "npm run migrate:up -w apps/api",
+    "migrate:down": "npm run migrate:down -w apps/api",
+    "start": "npm run start -w apps/api",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2"
+  },
+  "overrides": {
+    "vite": "8.3.4"
   }
 }

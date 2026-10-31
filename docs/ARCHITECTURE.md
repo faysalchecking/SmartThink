@@ -1,68 +1,67 @@
 # Architecture
 
 ## Style
-Modular monolith. One Node.js backend process, one React single-page app served as static files, one PostgreSQL database, one private file storage directory.
+Modular monolith. One Laravel application (API, authentication, business logic, scheduled jobs, queue jobs), one React single-page application (built to static files), one PostgreSQL 18 database, and one private file directory.
 
 ## Components
-Browser (React + TypeScript, Vite build)
-| HTTPS, JSON, HttpOnly session cookie
+Browser
+React + TypeScript SPA (Vite build)
+| HTTPS in production, JSON, session cookie, CSRF header
 v
-Fastify API (apps/api)
-|- auth module
-|- companies module (platform + company settings)
-|- members module (users, roles, invitations)
-|- candidates, clients, jobs, pipeline module
-|- documents module --> StorageProvider (local disk now, S3-compatible later)
-|- cv module --> deterministic HTML template --> PDF renderer
-|- audit module
-|- jobs module (in-process scheduled tasks stored in PostgreSQL)
+Reverse proxy (production) / Vite dev server with proxy (development)
+
+static files from frontend/dist
+/api and /sanctum forwarded to PHP
 v
-PostgreSQL 18 (smartthink_dev locally; least-privilege role smartthink_app)
+Laravel application (backend/)
+Sanctum SPA authentication
+Company resolution middleware
+Policies and Form Requests
+Modules: Companies, Members, Recruitment, Documents, Cv, Exports, Reports, Audit
+Queue (database driver) and scheduler
+|
++--> PostgreSQL 18: connection smartthink_app (runtime), smartthink_migrator (migrations only)
++--> Private file disk: backend/storage/app/private
++--> PDF renderer (chosen in ADR-0005), no external network call
 
-## Backend module rule
-Each module has the same internal layout:
-modules/<name>/
-routes.ts HTTP only: parse, validate, call service, return
-service.ts business rules and authorisation checks
-repository.ts SQL via Kysely, always takes companyId as a parameter
-schema.ts request and response validation (zod)
-types.ts module-internal types
-*.test.ts unit tests
-Routes never query the database directly. Repositories never decide permissions.
+## Backend module layout
+backend/app/Modules/<Name>/
+Http/Controllers/ thin: receive request, call service, return resource
+Http/Requests/ Form Request validation and authorisation hook
+Http/Resources/ output shape; never exposes hashes, storage keys, or internal columns
+Models/ Eloquent models; tenant models use BelongsToCompany
+Policies/ authorisation decisions
+Services/ business rules and multi-step writes in transactions
+Controllers never contain SQL. Services never decide permissions alone: the Policy is always checked. Shared code lives in `backend/app/Support/` and is kept small.
 
-## Frontend structure
-apps/web/src/
-app/ routing, providers, layout
-features/<name>/ pages, components, hooks, API client calls for one feature
-shared/ UI primitives, formatting, error boundaries
-i18n/ English strings file
+## Frontend layout
+frontend/src/
+app/ router, providers, layout
+features/<name>/ pages, components, API calls for one feature
+shared/ UI primitives, formatting, error boundary
+i18n/ English strings (translation keys, no hard-coded UI text)
 
 ## Request lifecycle for a protected company route
-1. Session cookie read, session looked up, expiry and status checked.
-2. Company ID taken from the URL path, then checked against an active membership of the session user.
-3. Permission for the action checked from the role's permission set.
-4. Service runs with the membership's companyId. Repository adds `company_id = $1` to every query.
-5. Audit row written for privileged or data-changing actions.
-6. Response returned. Errors map to fixed codes, never raw SQL messages.
-
-Details and tests: TENANT_ISOLATION.md.
-
-## Data flow for CV export
-Candidate verified fields + chosen template + section order + review confirmation -> pure function builds an HTML document -> PDF rendered locally -> PDF stored as a generated export (private) -> download through authorised endpoint. No external AI or network call is made.
-
-## Configuration
-All configuration comes from environment variables validated at startup with zod. The app refuses to start with missing or weak values (for example `SESSION_SECRET` shorter than 32 characters).
+1. Session cookie checked by Sanctum. Unauthenticated requests get 401.
+2. Company resolved from the route parameter and checked against an active membership of the signed-in user. No membership gives 404 (not 403).
+3. Company context is set for the database connection (see ADR-0003).
+4. Policy checked for the action.
+5. Form Request validates input before the controller runs.
+6. Service runs. Tenant models add `company_id` from the resolved company.
+7. Audit entry written for privileged or data-changing actions, in the same transaction.
+8. Response resource returned. Errors use a fixed JSON shape.
+9. Middleware `terminate()` resets the company context.
 
 ## Background work
-Jobs such as session cleanup, export file purge, and backup reminders run in the API process using a PostgreSQL table for scheduling and a lock to avoid double-run. No Redis or external queue in MVP. Decision recorded in RISKS_AND_DECISIONS.md (D-06).
+- Queue: database driver, table `jobs`. Worker runs as a long-lived process (`php artisan queue:work`).
+- Scheduler: `php artisan schedule:run` runs every minute from the operating system scheduler (Windows Task Scheduler in development, cron in production).
+- No Redis in the MVP.
+
+## Configuration
+All configuration comes from `backend/.env`, read by Laravel's `config/` files. Startup checks: `APP_KEY` must be set, `APP_DEBUG` must be `false` when `APP_ENV=production`, and `SESSION_SECURE_COOKIE` must be `true` in production. A Phase 1 test verifies these rules.
 
 ## Scaling path (not needed for MVP)
-1. Move files to an S3-compatible bucket (change StorageProvider only).
-2. Run a separate worker process using the same code and database.
+1. Move files to an S3-compatible disk (configuration change plus one adapter package).
+2. Run the queue worker on a second process or machine.
 3. Add a read replica if reporting becomes slow.
 Each step needs its own ADR before implementation.
-
-## Open technical questions (decided in Phase 1 with verification)
-- Exact versions of Fastify, Kysely, node-pg-migrate, zod, argon2, and the PDF renderer. Each is checked with `npm view <pkg> version time` before pinning, and recorded in the ADR.
-- PDF renderer choice: Chromium-based print versus a pure-JS PDF library. Evaluated in Phase 4 with the same fixtures. Decision in ADR-0005.
-

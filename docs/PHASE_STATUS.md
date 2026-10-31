@@ -1,40 +1,40 @@
 # Phase status
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 
 ## Phase 0: Audit, scope, documentation, architecture, roadmap
-Status: DOCUMENTATION COMPLETE, WAITING FOR OWNER CONFIRMATION
+Status: RE-OPENED. Stack changed to Laravel + React + PostgreSQL + Markdown (D-11). Documentation re-issued. Owner's written confirmation required.
 
-### Completed (verified with real output)
-- Windows audit: Windows 11 Home 64-bit, Node v24.21.0, npm 11.19.0, Git 2.55.0, PostgreSQL 18.6 (service running, port 5432 reachable).
-- `D:\SmartThink` confirmed empty before setup.
-- GitHub repo `faysalchecking/SmartThink` confirmed empty before the first push.
-- Local Git repository initialised on branch `main`.
-- Database `smartthink_dev` and role `smartthink_app` created. Role verified: not superuser, no BYPASSRLS. Runtime user cannot create tables (correct).
-- `.env` created locally, ignored by Git (`git check-ignore` confirmed line 9 of `.gitignore`).
-- Commits pushed to origin/main: `c9b0343`, `205eee5`, `983b4d5`. Later commits: see the output recorded in CHANGELOG.md.
+### Completed with real evidence
+- Windows audit (2026-10-28): Windows 11 Home 64-bit, Node.js 24.21.0, npm 11.19.0, Git 2.55.0, PostgreSQL 18.6, service running, port 5432 reachable.
+- Local Git repository on branch `main`. Remote `origin` set to `faysalchecking/SmartThink`. Push works (verified `git ls-remote`).
+- `.gitignore` and `.env` handling verified (`git check-ignore` matched line 9 of `.gitignore`).
+- Database and roles: `smartthink_dev` and `smartthink_test` exist. `smartthink_app` and `smartthink_migrator` are neither superuser nor BYPASSRLS (verified). `smartthink_app` cannot create tables (verified).
+- `pg_hba.conf`: all `host` lines for 127.0.0.1 and ::1 use `scram-sha-256` (verified, 2026-10-29).
+- Version release-age check run for the Node prototype (2026-10-28). Results are not reused for the Laravel stack; PHP packages are checked at install time.
 
-### Written as documentation (not yet tested, not implemented)
-README, PRODUCT_VISION, REQUIREMENTS, ROADMAP, ARCHITECTURE, SYSTEM_MAP, WORKFLOW, SECURITY, TENANT_ISOLATION, DATABASE_SCHEMA, API_SPEC, TESTING, DEPLOYMENT, BACKUP_RESTORE, INSTALLATION, USER_GUIDE, OPERATIONS, CHANGELOG, RISKS_AND_DECISIONS, ADR-0001 to ADR-0004.
+### Written as documentation (not implemented, not tested)
+All files listed in the README index. ADR-0001 to ADR-0005.
 
-### Not done in Phase 0
-- ADR-0005 (deployment and PDF renderer): planned for Phase 4 and Phase 7.
-- Owner confirmation of this phase.
-- Git status and push result of the final Phase 0 commit (owner to paste output).
+### Not done
+- PHP and Composer audit: not run yet.
+- Laravel install: not started (needs approval).
+- Archiving the Node prototype: not done (needs approval).
+- Owner confirmation of the re-issued documentation.
 
-### Open items (owner action)
-1. Revoke the GitHub token that was pasted in chat earlier.
-2. Change any password or secret that was pasted in chat. Current `.env` values were never pasted by the owner in the verified output, but treat the earlier pasted values as exposed.
-3. Confirm Git commit identity.
-4. Approve `smartthink_test` database creation before Phase 1.
+### Owner action required
+1. Confirm the re-issued documentation in writing.
+2. Approve or refuse archiving the Node prototype (D-16).
+3. Run the PHP audit commands in INSTALLATION.md and send the output.
+4. Confirm the GitHub token from earlier chat is revoked (R-06).
 
-### Phase 1 (not started)
-Starts only after the owner reviews Phase 0 and confirms in writing.
+## Phase 1: Foundation
+Status: NOT STARTED. Starts only after Phase 0 is confirmed.
 
-## Git commit message suggestion (Phase 0 final)
-`docs: complete phase 0 documentation (API, workflows, system map, installation, deployment, operations)`
+## Commit message suggestion (Phase 0 re-issue)
+`docs: re-issue phase 0 documentation for Laravel + React + PostgreSQL stack (ADR-0001 to 0005)`
 
 ## Known limitations
-- Phase 0 verified only the machine and the PostgreSQL server. Nothing in the application has been built or tested.
-- Hosting and backup costs are categories only. No prices were verified.
-- 30-day delivery of the full scope is not promised. Estimate: about 6 to 8 weeks, re-measured after each phase.
+- Nothing in the application is built, installed, or tested. The Laravel and React versions are not yet pinned.
+- Hosting and backup costs are categories only. No price is verified.
+- The 30-day target for the full scope is not promised. Estimate: about 6 to 8 weeks, re-measured each phase.

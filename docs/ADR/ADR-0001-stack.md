@@ -1,43 +1,52 @@
-# ADR-0001: Technology stack and architecture style
+# ADR-0001: Technology stack
 
-Status: Proposed (becomes Accepted after owner approval of Phase 0)
-Date: 2026-10-28
+Status: Accepted by owner, 2026-10-29. Supersedes the earlier ADR-0001 (Fastify, Kysely, Node-only backend).
+Date: 2026-10-29
 
 ## Context
-SmartThink is a multi-tenant ATS for recruitment companies. It must run on one Windows development PC now and on one small Linux server later. The owner is a solo developer with a 30-day target. The stack must be free to use, well supported, and easy to test strictly.
+SmartThink is a multi-tenant ATS for one developer on a Windows 11 PC, later one Linux server. The owner has chosen the following stack and asked that it be final.
 
-Verified environment (audit on 2026-10-28):
+Verified on the owner's machine (audit output, 2026-10-28):
 - Windows 11 Home, 64-bit
-- Node.js v24.21.0, npm 11.19.0
+- Node.js 24.21.0, npm 11.19.0
 - Git 2.55.0
-- PostgreSQL 18.6, service running, port 5432 reachable
-- pnpm and yarn not installed. npm is used for now.
+- PostgreSQL 18.6, service running on port 5432
+
+Not yet verified: PHP, Composer, Laravel version. These must be checked before Phase 1 starts (see INSTALLATION.md).
 
 ## Decision
-1. Architecture: modular monolith. One deployable backend, one frontend bundle, one PostgreSQL database. No microservices.
-2. Frontend: React + TypeScript, built with Vite.
-3. Backend: Fastify + TypeScript. Modules are split by domain (auth, companies, candidates, jobs, documents, cv, audit).
-4. Database access: Kysely (typed SQL query builder). No heavy ORM. SQL stays visible and reviewable, which matters for tenant-isolation review.
-5. Migrations: versioned SQL files managed by node-pg-migrate. Every schema change is a committed migration.
-6. Database: PostgreSQL 18 (already installed). Application uses a least-privilege role, never the `postgres` superuser.
-7. Files: private local storage behind a `StorageProvider` interface. An S3-compatible provider can be added later without changing business code.
-8. PDF: deterministic, local HTML-to-PDF generation with a template system. No AI API is required.
-9. Package manager: npm with committed `package-lock.json`. pnpm is optional later.
-10. Docker: not required for development. Reconsidered for deployment in Phase 7.
+1. Architecture: modular monolith. One Laravel application serves the JSON API. One React single-page application is the user interface.
+2. Backend: Laravel, the latest stable release at Phase 1 install time, pinned by `composer.lock`.
+3. Frontend: React with TypeScript, built with Vite. No server-side rendering. Routing with React Router.
+4. Database: PostgreSQL 18. Application connects as a least-privilege role `smartthink_app`. Schema changes run as `smartthink_migrator` (owner of tables, no superuser, no BYPASSRLS).
+5. Authentication: Laravel Sanctum in SPA mode (first-party cookie session with CSRF protection). No API tokens are issued to browsers in the MVP.
+6. Password hashing: Argon2id through Laravel's hashing configuration.
+7. Documentation: Markdown in `docs/`.
+8. Scripts: PowerShell for Windows. Composer scripts and npm scripts for the individual parts.
+9. Production topology: one Linux server. A reverse proxy serves the built React files and forwards `/api` and `/sanctum` to PHP-FPM running Laravel. Exact proxy choice is recorded in ADR at Phase 7.
+
+## Languages used
+- PHP: backend application, validation, authorisation, business rules, migrations (as Laravel classes).
+- SQL: PostgreSQL-specific statements inside migrations (Row-Level Security, indexes, constraints, extensions).
+- TypeScript (TSX): React frontend and frontend tests.
+- PowerShell: Windows setup, checks, and backup scripts.
+- Markdown: documentation.
+- JavaScript: only inside frontend tooling config, and only where a tool requires it. No Node backend.
 
 ## Alternatives considered
-- NestJS: strong structure, but heavier and more boilerplate for a 30-day solo build. Rejected for now.
-- Prisma: good DX, but its migration and query layer make explicit row-level security and custom SQL harder to review. Rejected.
-- Drizzle: viable. Kysely was chosen for its closer-to-SQL API. This can be revisited in an ADR if needed.
-- Microservices: rejected. Operational cost is too high for one developer and one server.
-- Redis, queues, Kubernetes: rejected for MVP. Background work starts as in-process jobs stored in PostgreSQL.
+- Fastify + React (previous decision): rejected by owner. Equally viable technically.
+- NestJS: rejected. Adds a second large framework on the Node side.
+- Laravel with Blade server-rendered pages: rejected. The owner asked for React.
+- Laravel + Inertia: rejected for now. Adds a coupling layer the team does not need; the API-plus-SPA split is clearer for tenant testing.
+- Next.js: rejected. Adds a Node server and a second backend concern.
 
 ## Consequences
-- Easy to run and debug on one PC.
-- Tenant isolation is enforced in application code and tested, with PostgreSQL Row-Level Security added as defence in depth (decision in ADR-0003).
-- Scaling beyond one server would need a separate ADR (for example, moving files to object storage and splitting the worker process).
+- The backend test suite is written in PHP (PHPUnit). The frontend test suite is written in TypeScript (Vitest). Browser tests are written in TypeScript (Playwright).
+- The previous Node backend prototype (`apps/api`, root npm workspace, version scripts) is not used. It is archived outside the repository after owner approval.
+- Laravel's conventions (Eloquent, Policies, Form Requests, Middleware) become the standard for backend code. Custom abstractions are avoided.
+- Two PHP-specific risks are recorded in RISKS_AND_DECISIONS.md: request-scoped database context, and Eloquent global-scope bypass.
 
 ## Cost model
-- One-time: no software license cost. The stack is open source. Developer time is the main cost.
-- Recurring (estimates only, prices not verified): domain name, one small Linux VPS, off-site backup storage, transactional email (only if needed). Prices must be checked against current region-specific pricing before any budget is promised.
-- Optional and not required: paid AI API for CV writing assistance.
+- One-time: no licence cost. All components are open source. Developer time is the main cost.
+- Recurring (categories, prices not verified): domain name, one Linux server, off-site backup storage, transactional email if needed.
+- Optional and not required: paid AI API.

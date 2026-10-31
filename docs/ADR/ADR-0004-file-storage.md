@@ -1,19 +1,20 @@
 # ADR-0004: Private file storage
 
-Status: Proposed
-Date: 2026-10-28
+Status: Proposed, to be accepted in Phase 4.
+Date: 2026-10-29
 
 ## Decision
-- A `StorageProvider` interface with methods: `put(stream, meta) -> storageKey`, `get(storageKey) -> stream`, `delete(storageKey)`, `exists(storageKey)`.
-- MVP implementation: `LocalStorageProvider` writing to `FILE_STORAGE_PATH`, which is outside `apps/` and outside any static web root.
-- Storage keys are random UUIDs. Original file names are stored only in the database and sent in `Content-Disposition` after sanitising.
-- Downloads go through the authorised API. No signed public URLs in MVP.
-- A future `S3StorageProvider` replaces only the provider, not business code.
+- Candidate files are stored on a Laravel filesystem disk named `private`, rooted at `backend/storage/app/private`. This directory is outside `backend/public/`, so the web server never serves it.
+- Each file gets a random UUID name. The original file name is kept only in the database and is sanitised before it is used in any `Content-Disposition` header.
+- Files are downloaded only through a controller that checks the document's company, the membership, and the `documents:download` permission, then streams the file with `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`.
+- No signed public URLs in the MVP.
+- A future S3-compatible disk is added as another named disk in `config/filesystems.php`. Business code uses only the disk name.
 
-## Reasons
-- Zero recurring cost for a single server.
-- The interface keeps the S3 migration path open.
+## Upload validation
+- Size limit from configuration, default 10 MB.
+- Allowed types: PDF, JPEG, PNG. Laravel's `mimes` rule checks the file content, not only the extension. The Phase 4 test set also includes disguised files.
+- The stored file's SHA-256 is saved so later corruption can be detected.
 
 ## Risks
 - Local disk is a single point of failure. Mitigated by backups (BACKUP_RESTORE.md).
-- Path traversal: the provider never builds paths from user input. Tested in Phase 4.
+- Path traversal: the application never builds a path from user input. Covered by a Phase 4 test with `../` names.

@@ -1,39 +1,45 @@
 # Operations runbook (plan)
 
-Status: PLANNED. Procedures are written here so they can be tested in Phase 6 and 7. Steps marked TEST are not valid until the test is logged.
+Status: PLANNED. Steps marked TEST are valid only after the related test is logged.
+
+## Processes that must run
+| Process | Purpose | Development | Production |
+|---|---|---|---|
+| `php artisan serve` or PHP-FPM | Serves the API | Terminal | PHP-FPM service |
+| `npm run dev` or static files | Serves the React app | Terminal | Reverse proxy |
+| `php artisan queue:work` | Runs queued jobs | Terminal (Phase 4+) | systemd service |
+| `php artisan schedule:run` | Scheduled tasks | Task Scheduler, every minute | cron, every minute |
 
 ## Daily
-- Check that the last database backup completed (TEST: backup job log, from Phase 6).
-- Check the API service is running (TEST: systemd status, from Phase 7).
+- Check that the last database backup completed. (TEST: backup log, Phase 6)
+- Check that the queue worker is running and the failed-jobs count is zero or explained.
 
 ## Weekly
-- Review security logs for repeated login failures or 403 spikes.
-- Check disk space for the database and the file storage directory.
+- Review login-failure and 403/404 spikes in the log.
+- Check disk space for the database and the private file directory.
 
 ## Monthly
-- Run `npm audit` and review the results. Fix high and critical items or record the reason.
-- Confirm off-site backup copies are readable (a checksum check, not just a file count).
+- Run `composer audit` and `npm audit`. Fix high and critical items or record the reason.
+- Confirm off-site backup copies can be read (checksum check, not only a file count).
 
 ## Incidents
 | Situation | First action |
 |---|---|
-| Suspected data leak between companies | Suspend the affected company or the user. Preserve logs. Do not delete audit data. Investigate using audit_logs. |
-| Leaked password or token | Revoke the session or rotate the secret. Force a password reset for affected users. |
-| `SESSION_SECRET` exposed | Generate a new secret, restart the service, which invalidates existing sessions. Record in the log. |
-| Database corruption | Stop the API. Restore from the latest verified backup (BACKUP_RESTORE.md). |
-| Disk full | Stop uploads. Free space only after a backup is verified. Never delete audit data to free space. |
+| Suspected data leak between companies | Suspend the affected company or user. Keep logs and `audit_logs`. Do not delete any data. Investigate from the audit log. |
+| Leaked password or token | Revoke sessions, force a password reset for affected users. |
+| `APP_KEY` exposed | See the rotation procedure below. Plan it; it logs everyone out. |
+| Database corruption | Stop PHP-FPM and the queue. Restore from the latest verified backup. |
+| Disk full | Stop uploads. Free space only after a verified backup. Never delete audit data. |
 
 ## Secret rotation
-1. Generate a new value locally.
-2. Update the server's environment file with restricted permissions.
-3. Restart the service.
-4. Record the date in CHANGELOG.md without the value.
+1. Database password: change it in PostgreSQL with `ALTER ROLE`, update `backend/.env`, restart PHP-FPM and the queue worker, record the date.
+2. `APP_KEY`: rotation makes existing encrypted values and sessions unreadable. Schedule a maintenance window, announce it, generate a new key, restart, and record the date in CHANGELOG.md without the value.
+3. Never paste the value into chat, a ticket, or a commit message.
 
-## Access to production
-- Only the owner has server access.
-- Use the owner's own admin account. No shared login.
-- Any support access to company data is out of scope. There is no hidden or master access (SECURITY.md).
+## Access
+- Only the owner has server access, through the owner's own account.
+- No shared logins. No support access to company data (SECURITY.md).
 
 ## Logs
-- Application logs are structured JSON, with secrets redacted.
-- Retention for logs: planned 30 days (confirmed in Phase 6).
+- Application logs are structured. Redaction rules are in SECURITY.md.
+- Log retention: planned 30 days, confirmed in Phase 6.

@@ -6,11 +6,18 @@ Base path: `/api/v1`. JSON only (except file upload and download). Errors use on
 `{ "error": { "code": "NOT_FOUND", "message": "Resource not found" } }`
 
 ## Conventions
-- Company-scoped routes use `/api/v1/companies/:companyId/...`. The `companyId` in the path only selects a membership. The server checks membership and permission before any data is read (see TENANT_ISOLATION.md).
+- Base path: `/api/v1`. Browser calls use the same origin, with Sanctum at `/sanctum/csrf-cookie` for the CSRF cookie.
+- Authentication: Sanctum session cookie. Every state-changing request sends the `X-XSRF-TOKEN` header that Sanctum provides.
+- Company-scoped routes use `/api/v1/companies/{company}/...`. The `{company}` segment only selects a membership. Laravel's middleware checks the membership and the policy before the controller runs.
 - Cross-company access returns 404, not 403.
-- Lists use `?page=1&pageSize=25` (pageSize max 100) and `?q=` for search.
-- IDs are UUIDs. Dates are ISO 8601 UTC.
-- Every state-changing request needs a valid session cookie and passes the Origin check (CSRF control).
+- Lists use `?page=1&per_page=25` (`per_page` max 100) and `?q=` for search.
+- IDs are UUIDs. Dates are ISO 8601 in UTC.
+- Errors use one JSON shape: `{ "error": { "code": "NOT_FOUND", "message": "Resource not found" } }`. Validation errors use Laravel's standard `errors` object with the same top-level `error.code` of `VALIDATION_FAILED`.
+- Route rules (checked by a Phase 2 test on `php artisan route:list --json`):
+  1. Every route has a policy or is listed as public with a reason.
+  2. Every request uses a Form Request.
+  3. Every response uses an API Resource. No password hashes, token hashes, storage keys, or internal IDs appear in output.
+  4. Privileged or data-changing actions write an audit row in the same transaction.
 
 ## Platform (Super Admin only)
 | Method | Path | Permission | Phase |

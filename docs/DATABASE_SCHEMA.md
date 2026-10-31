@@ -61,7 +61,17 @@ Conventions
 ## Row-Level Security
 RLS policies are added in Phase 2 on every tenant table (see ADR-0003). Platform tables are not RLS-protected but are reachable only through platform routes.
 
+## Conventions
+- Primary keys: `uuid`, generated in PHP (Laravel `uuid` column type with UUIDv7 where the library supports it, confirmed in Phase 1).
+- Timestamps: `timestamptz` in UTC, Laravel `timestamps()` plus `archived_at` where soft archive applies.
+- Tenant tables: `company_id uuid not null references companies(id)`, an index starting with `company_id`, RLS enabled and forced (ADR-0003).
+- Enums: `text` with a check constraint, not PostgreSQL ENUM types.
+- Soft delete for business records: `archived_at` or `deleted_at`, never a hard delete in the API.
+- Connections: runtime tables are read and written as `smartthink_app`. Migrations run as `smartthink_migrator`.
+
 ## Migration rules
-- One migration per logical change, named `YYYYMMDDHHMM_description`.
-- Every migration has an `up` and a `down`. Down is tested on a copy database.
-- No destructive change to a table holding data without a documented backup step.
+- Laravel migration classes in `backend/database/migrations/`, named by Laravel's timestamp prefix.
+- Every migration has a working `down()`. Rollback is tested on `smartthink_test` in Phase 1 and again for each new migration.
+- PostgreSQL-only statements (RLS policies, extensions, partial indexes) are fixed SQL strings in `DB::statement()`. No interpolated values.
+- A destructive change to a table with data needs a backup step written in the migration's comment and in CHANGELOG.md.
+- Migrations run with `--database=pgsql_migrator`. Running them as `smartthink_app` is a failure by design.
