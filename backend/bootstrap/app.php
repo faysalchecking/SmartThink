@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Tenancy\Http\Middleware\EnsurePlatformAdmin;
+use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
+use App\Support\Http\ApiErrorRenderer;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,10 +16,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Sanctum SPA mode: session cookie plus CSRF for first-party frontend origins.
+        $middleware->statefulApi();
+
+        $middleware->alias([
+            'company' => ResolveCompany::class,
+            'platform.admin' => EnsurePlatformAdmin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
-        );
-    })->create();
+        // Every API error has one shape. Internal details are never returned.
+        $exceptions->render(function (Throwable $e, Request $request) {
+            return $request->is('api/*') ? ApiErrorRenderer::render($e) : null;
+        });
+    })
+    ->create();

@@ -61,3 +61,9 @@ Known limitations:
 - Full npm audit (including dev tools) shows 11 moderate issues, all in development tooling. Recorded in RISKS_AND_DECISIONS.md, not fixed with npm audit fix --force.
 - Tenant isolation, authentication, and RLS are not started.
 - Backup and restore are not tested.
+
+## Phase 2
+Status: BATCH A APPROVED BY OWNER. BATCH B IN PROGRESS.
+Batch A evidence (owner machine): scripts\check.ps1 ALL CHECKS PASSED.
+Batch A covers: Sanctum SPA login/logout/me, login rate limit (5 per 15 min), company create/show/update, platform status change, membership resolution, audit log with append-only trigger and REVOKE, error envelope.
+Not yet covered: CSRF tests (currently disabled in TestCase), RLS spike, invitations, membership management, full TI-001 to TI-018 suite.
