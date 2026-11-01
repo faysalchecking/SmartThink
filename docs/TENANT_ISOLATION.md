@@ -38,4 +38,19 @@ Two companies (A and B) are seeded. Each has a Company Admin, an Employee, and a
 | TI-018 | Architecture test: `withoutGlobalScope` outside the allowlist | Test fails if found |
 
 ## Evidence
-Results are recorded in PHASE_STATUS.md in Phase 2, with the exact command, date, and pass count. A failing test is never skipped to get a green result.
+Results are recorded in PHASE_STATUS.md in Phase 2, with the exact command, date, and pass count. A failing test is never skipped to get a green result.## Test status (updated Phase 2 B2a)
+| ID | Status | Where |
+|---|---|---|
+| TI-001 | Covered | CompanyAccessTest (read company B) |
+| TI-002 | Covered | CompanyAccessTest (update company B) |
+| TI-003 | Not applicable yet | Documents arrive in Phase 4 |
+| TI-004 | Partial | MembershipTest admin sees own company members |
+| TI-005 to TI-008 | Not applicable yet | Candidates, search, downloads, export: Phase 3 to 5 |
+| TI-009 | Covered | CompanyAccessTest (company id in URL) |
+| TI-010 | Partial | Body company_id ignored by design, add explicit test in B2b |
+| TI-011 | Covered | Deactivated membership returns 404 |
+| TI-012 | Covered | MembershipTest deactivated membership cannot access |
+| TI-013, TI-014 | Not applicable yet | Queue export and dashboard: later phases |
+| TI-015 | Partial | Error body checked in AuthTest and CompanyAccessTest |
+| TI-016, TI-017 | Pending B2b | RLS spike |
+| TI-018 | Covered | ForbiddenPatternsTest |

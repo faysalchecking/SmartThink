@@ -22,16 +22,23 @@ class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('login', function (Request $request): Limit {
             $email = Str::lower((string) $request->input('email', ''));
-            $key = $email.'|'.$request->ip();
 
-            return Limit::perMinutes(15, 5)->by($key)->response(
-                fn (): JsonResponse => response()->json([
-                    'error' => [
-                        'code' => 'RATE_LIMITED',
-                        'message' => 'Too many attempts. Try again later.',
-                    ],
-                ], 429),
+            return Limit::perMinutes(15, 5)->by($email.'|'.$request->ip())->response(
+                fn (): JsonResponse => $this->rateLimited(),
             );
         });
+
+        RateLimiter::for('invitations', function (Request $request): Limit {
+            return Limit::perHour(20)->by('invite|'.$request->ip())->response(
+                fn (): JsonResponse => $this->rateLimited(),
+            );
+        });
+    }
+
+    private function rateLimited(): JsonResponse
+    {
+        return response()->json([
+            'error' => ['code' => 'RATE_LIMITED', 'message' => 'Too many attempts. Try again later.'],
+        ], 429);
     }
 }

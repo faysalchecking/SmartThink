@@ -21,6 +21,12 @@ abstract class TestCase extends BaseTestCase
 
     protected const TEST_PASSWORD = 'correct-horse-battery-staple';
 
+    /**
+     * Only CsrfTest sets this to true, so it runs the real CSRF check.
+     * All other suites disable CSRF, because they test authentication and authorisation.
+     */
+    protected bool $keepCsrf = false;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -31,8 +37,9 @@ abstract class TestCase extends BaseTestCase
             throw new RuntimeException('Tests must run against '.self::TEST_DATABASE.' only.');
         }
 
-        // CSRF has its own test in the next batch. These tests cover authentication and authorisation.
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        if (! $this->keepCsrf) {
+            $this->withoutMiddleware(ValidateCsrfToken::class);
+        }
     }
 
     /**

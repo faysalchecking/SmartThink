@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Identity\Http\Middleware\EnsureAccountActive;
 use App\Modules\Tenancy\Http\Middleware\EnsurePlatformAdmin;
 use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
 use App\Support\Http\ApiErrorRenderer;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
 
         $middleware->alias([
+            'active' => EnsureAccountActive::class,
             'company' => ResolveCompany::class,
             'platform.admin' => EnsurePlatformAdmin::class,
         ]);

@@ -3,6 +3,8 @@
 use App\Http\Controllers\HealthController;
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Tenancy\Http\Controllers\CompanyController;
+use App\Modules\Tenancy\Http\Controllers\InvitationController;
+use App\Modules\Tenancy\Http\Controllers\MemberController;
 use App\Modules\Tenancy\Http\Controllers\PlatformCompanyController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,12 +15,16 @@ Route::prefix('v1')->group(function (): void {
         ->post('/auth/login', [AuthController::class, 'login'])
         ->name('auth.login');
 
-    Route::middleware('auth')->group(function (): void {
+    Route::middleware('throttle:invitations')
+        ->post('/invitations/accept', [InvitationController::class, 'accept'])
+        ->name('invitations.accept');
+
+    Route::middleware(['auth', 'active'])->group(function (): void {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
         Route::get('/auth/me', [AuthController::class, 'me'])->name('auth.me');
     });
 
-    Route::middleware(['auth', 'platform.admin'])
+    Route::middleware(['auth', 'active', 'platform.admin'])
         ->prefix('platform')
         ->name('platform.')
         ->group(function (): void {
@@ -28,11 +34,15 @@ Route::prefix('v1')->group(function (): void {
                 ->name('companies.status');
         });
 
-    Route::middleware(['auth', 'company'])
+    Route::middleware(['auth', 'active', 'company'])
         ->prefix('companies/{company}')
         ->name('companies.')
         ->group(function (): void {
             Route::get('/', [CompanyController::class, 'show'])->name('show');
             Route::patch('/', [CompanyController::class, 'update'])->name('update');
+
+            Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+            Route::patch('/members/{member}', [MemberController::class, 'update'])->name('members.update');
+            Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
         });
 });

@@ -67,3 +67,11 @@ Status: BATCH A APPROVED BY OWNER. BATCH B IN PROGRESS.
 Batch A evidence (owner machine): scripts\check.ps1 ALL CHECKS PASSED.
 Batch A covers: Sanctum SPA login/logout/me, login rate limit (5 per 15 min), company create/show/update, platform status change, membership resolution, audit log with append-only trigger and REVOKE, error envelope.
 Not yet covered: CSRF tests (currently disabled in TestCase), RLS spike, invitations, membership management, full TI-001 to TI-018 suite.
+## Phase 2
+Status: BATCH A APPROVED. BATCH B1 PASSED (owner machine). BATCH B2 IN PROGRESS.
+
+B1 covers: invitation create and accept (token hashed, single use, expiry, email bound), member list (admin only, company scoped), role and status change, last-admin protection under row lock, cross-company membership refusal, deactivated member refused.
+## Phase 2
+Status: BATCH A and B1 APPROVED. B2a PASSED. B2b (RLS spike) IN PROGRESS.
+B2a: CSRF enforced on state-changing routes (real VerifyCsrfToken check), disabled account loses session on next request.
+Open: RLS spike (TI-016, TI-017), password change with session revocation (no endpoint yet, see end of this message).
