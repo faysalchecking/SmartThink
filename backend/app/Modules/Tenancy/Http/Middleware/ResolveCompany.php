@@ -4,6 +4,7 @@ namespace App\Modules\Tenancy\Http\Middleware;
 
 use App\Models\User;
 use App\Modules\Tenancy\Context\TenantContext;
+use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyStatus;
 use App\Modules\Tenancy\Enums\MembershipStatus;
 use App\Modules\Tenancy\Models\Membership;
@@ -46,12 +47,16 @@ final class ResolveCompany
         $request->attributes->set(self::ATTRIBUTE, $membership);
 
         $tenant = app(TenantContext::class);
+        $database = app(TenantDatabaseContext::class);
+
         $tenant->set($membership->company_id);
+        $database->apply($membership->company_id);
 
         try {
             return $next($request);
         } finally {
             $tenant->clear();
+            $database->clear();
         }
     }
 

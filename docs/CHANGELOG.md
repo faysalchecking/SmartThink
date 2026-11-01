@@ -17,3 +17,7 @@
 - Environment audit, `.gitignore`, `.env.example`, first documentation commits.
 - Database `smartthink_dev`, roles `smartthink_app` (runtime) and later `smartthink_migrator`.
 - Commits pushed to `origin/main`: `c9b0343`, `205eee5`, `983b4d5`, `4bfd43b`.
+### 2026-10-29: Phase 2 (authentication, tenancy, audit)
+- Sanctum SPA auth, login rate limit, company and membership model, invitations, member management, audit log with append-only enforcement, RLS on invitations, CSRF enforcement, account-disable session invalidation.
+- Decisions D-18 to D-27 recorded in RISKS_AND_DECISIONS.md.
+- Test suite: 49 passing on smartthink_test. Pint and Larastan clean.

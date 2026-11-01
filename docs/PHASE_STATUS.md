@@ -67,11 +67,31 @@ Status: BATCH A APPROVED BY OWNER. BATCH B IN PROGRESS.
 Batch A evidence (owner machine): scripts\check.ps1 ALL CHECKS PASSED.
 Batch A covers: Sanctum SPA login/logout/me, login rate limit (5 per 15 min), company create/show/update, platform status change, membership resolution, audit log with append-only trigger and REVOKE, error envelope.
 Not yet covered: CSRF tests (currently disabled in TestCase), RLS spike, invitations, membership management, full TI-001 to TI-018 suite.
-## Phase 2
-Status: BATCH A APPROVED. BATCH B1 PASSED (owner machine). BATCH B2 IN PROGRESS.
 
-B1 covers: invitation create and accept (token hashed, single use, expiry, email bound), member list (admin only, company scoped), role and status change, last-admin protection under row lock, cross-company membership refusal, deactivated member refused.
-## Phase 2
-Status: BATCH A and B1 APPROVED. B2a PASSED. B2b (RLS spike) IN PROGRESS.
-B2a: CSRF enforced on state-changing routes (real VerifyCsrfToken check), disabled account loses session on next request.
-Open: RLS spike (TI-016, TI-017), password change with session revocation (no endpoint yet, see end of this message).
+## Phase 2: Authentication, companies, membership, tenant isolation
+Status: COMPLETE, PENDING OWNER APPROVAL (2026-10-29)
+
+Evidence (owner machine): scripts\check.ps1 ALL CHECKS PASSED. Full suite: 49 tests passing, Pint PASS, Larastan level 6 no errors.
+
+Implemented:
+- Sanctum SPA login, logout, me. Argon2id hashing. Generic credential error.
+- Login rate limit: 5 attempts per 15 minutes per email and IP.
+- Companies: platform create (pending), activate/suspend with transition rules, company show and rename (admin only).
+- Membership resolution (ResolveCompany): unknown, foreign, malformed, deactivated return 404. Suspended company returns 403.
+- Invitations: token shown once, only SHA-256 stored, single use, 7-day expiry, bound to one email. Accept with existing or new account.
+- Member list (admin only, company scoped), role and status change, last-admin protection under row lock.
+- Audit log: append-only via model events, database trigger, and REVOKE UPDATE, DELETE, TRUNCATE from runtime role. Sensitive metadata redacted.
+- Row-level security on invitations (ENABLE, not FORCE), with narrow SECURITY DEFINER lookup for token accept. TI-016 and TI-017 pass.
+- CSRF enforced on state-changing routes (real VerifyCsrfToken check in CsrfTest).
+- Disabled account loses an existing session on its next request.
+- Architecture test: no withoutGlobalScope, withoutGlobalScopes, or DB::unprepared in app code.
+
+Open (not done in Phase 2):
+- Password change with revocation of other sessions: [choose (a) built in B3 / (b) deferred to Phase 3]
+- RLS on memberships and audit_logs: intentionally not applied (D-26). Protected by ResolveCompany, grants, triggers.
+- TI-003, TI-005 to TI-008, TI-013, TI-014: depend on documents, candidates, export, dashboard. Covered in those phases.
+- Local test database only. No production-like deployment tested.
+
+Known limitations:
+- Frontend has no UI for auth or companies yet. Phase 2 is API-only. Login screens belong to Phase 3 with the first real screens.
+- Invitations have no email delivery (D-22). Token is shown to the admin once.

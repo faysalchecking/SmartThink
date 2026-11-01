@@ -3,6 +3,7 @@
 namespace Tests\Feature\Tenancy;
 
 use App\Models\User;
+use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyRole;
 use App\Modules\Tenancy\Enums\MembershipStatus;
 use App\Modules\Tenancy\Models\Company;
@@ -21,6 +22,9 @@ class MembershipTest extends TestCase
     private function pendingInvitation(Company $company, User $actor, string $email, CompanyRole $role, ?\DateTimeInterface $expiresAt = null): string
     {
         $raw = Str::random(64);
+
+        // Direct insert bypasses the HTTP layer, so set the company context the way ResolveCompany would.
+        app(TenantDatabaseContext::class)->apply($company->id);
 
         Invitation::query()->create([
             'company_id' => $company->id,
@@ -53,8 +57,12 @@ class MembershipTest extends TestCase
 
         $this->assertIsString($token);
         $this->assertSame(64, strlen($token));
+
+        // RLS hides rows unless a company context is set. Set it before checking the table.
+        app(TenantDatabaseContext::class)->apply($company->id);
         $this->assertDatabaseHas('invitations', ['email' => $email, 'token_hash' => hash('sha256', $token)]);
         $this->assertDatabaseMissing('invitations', ['token_hash' => $token]);
+        app(TenantDatabaseContext::class)->clear();
     }
 
     public function test_employee_cannot_invite(): void

@@ -1,62 +1,71 @@
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Audit\AuditLogTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mcompany creation is audited with actor[39m[90m [39m [90m0.85s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcompany creation is audited with actor[39m[90m [39m [90m0.66s[39m  
   [32;1mΓ£ô[39;22m[90m [39m[90msensitive metadata is redacted before[39m[90mΓÇª [39m [90m0.07s[39m  
   [32;1mΓ£ô[39;22m[90m [39m[90maudit model refuses updates[39m[90m            [39m [90m0.07s[39m  
   [32;1mΓ£ô[39;22m[90m [39m[90mruntime role cannot update audit rows[39m[90mΓÇª [39m [90m0.07s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\HealthTest[39m
   [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns ok when database respon[39m[90mΓÇª[39m [90m0.07s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns unavailable without int[39m[90mΓÇª[39m [90m8.22s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns unavailable without int[39m[90mΓÇª[39m [90m8.31s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Identity\AccountStatusTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account loses an existing ses[39m[90mΓÇª[39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account cannot access company[39m[90mΓÇª[39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account loses an existing ses[39m[90mΓÇª[39m [90m0.48s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account cannot access company[39m[90mΓÇª[39m [90m0.47s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Identity\AuthTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin with valid credentials returns u[39m[90mΓÇª[39m [90m0.61s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mwrong password and unknown email retur[39m[90mΓÇª[39m [90m0.90s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin with valid credentials returns u[39m[90mΓÇª[39m [90m0.66s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mwrong password and unknown email retur[39m[90mΓÇª[39m [90m0.82s[39m  
   [32;1mΓ£ô[39;22m[90m [39m[90mdisabled user cannot log in[39m[90m            [39m [90m0.55s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin is rate limited after five attem[39m[90mΓÇª[39m [90m1.59s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin is rate limited after five attem[39m[90mΓÇª[39m [90m1.80s[39m  
   [32;1mΓ£ô[39;22m[90m [39m[90mme requires authentication[39m[90m             [39m [90m0.06s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mme returns the signed in user[39m[90m          [39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogout returns no content[39m[90m              [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mme returns the signed in user[39m[90m          [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogout returns no content[39m[90m              [39m [90m0.33s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\SchemaHealthMigrationTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mschema health table exists after migra[39m[90mΓÇª[39m [90m0.21s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mschema health table exists after migra[39m[90mΓÇª[39m [90m0.07s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Security\CsrfTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogout without csrf token is rejected[39m[90m  [39m [90m0.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin without csrf token is rejected[39m[90m   [39m [90m0.31s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogout without csrf token is rejected[39m[90m  [39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin without csrf token is rejected[39m[90m   [39m [90m0.32s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\CompanyAccessTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mnon member gets 404 for a company[39m[90m      [39m [90m0.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmalformed company id gets 404[39m[90m          [39m [90m0.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin of company a cannot read or upda[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmember can read own company[39m[90m            [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot update company setting[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin can update company and change is[39m[90mΓÇª[39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmembers of suspended company get 403[39m[90m   [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership gets 404[39m[90m        [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mregular user cannot use platform route[39m[90mΓÇª[39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mplatform admin creates pending company[39m[90m [39m [90m0.38s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mduplicate slug is rejected[39m[90m             [39m [90m0.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mpending company can be activated but n[39m[90mΓÇª[39m [90m0.31s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mnon member gets 404 for a company[39m[90m      [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmalformed company id gets 404[39m[90m          [39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin of company a cannot read or upda[39m[90mΓÇª[39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmember can read own company[39m[90m            [39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot update company setting[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin can update company and change is[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmembers of suspended company get 403[39m[90m   [39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership gets 404[39m[90m        [39m [90m0.47s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mregular user cannot use platform route[39m[90mΓÇª[39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mplatform admin creates pending company[39m[90m [39m [90m0.36s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mduplicate slug is rejected[39m[90m             [39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mpending company can be activated but n[39m[90mΓÇª[39m [90m0.33s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\MembershipTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin invitation stores only the token[39m[90mΓÇª[39m [90m0.49s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot invite[39m[90m                 [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90minvitee creates account and becomes an[39m[90mΓÇª[39m [90m0.58s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90minvitation cannot be used twice[39m[90m        [39m [90m0.57s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mexpired invitation is rejected[39m[90m         [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90msigned in user with a different email[39m[90mΓÇª [39m [90m0.56s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin cannot change a membership of an[39m[90mΓÇª[39m [90m0.57s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin deactivation is persisted and au[39m[90mΓÇª[39m [90m0.57s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership cannot access c[39m[90mΓÇª[39m [90m0.38s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlast active admin cannot be demoted[39m[90m    [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot list members[39m[90m           [39m [90m0.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin sees only own company members[39m[90m    [39m [90m0.94s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin invitation stores only the token[39m[90mΓÇª[39m [90m0.36s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot invite[39m[90m                 [39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minvitee creates account and becomes an[39m[90mΓÇª[39m [90m0.64s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minvitation cannot be used twice[39m[90m        [39m [90m0.63s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mexpired invitation is rejected[39m[90m         [39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90msigned in user with a different email[39m[90mΓÇª [39m [90m0.61s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin cannot change a membership of an[39m[90mΓÇª[39m [90m0.62s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin deactivation is persisted and au[39m[90mΓÇª[39m [90m0.62s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership cannot access c[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlast active admin cannot be demoted[39m[90m    [39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot list members[39m[90m           [39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin sees only own company members[39m[90m    [39m [90m0.87s[39m  
 
-  [90mTests:[39m    [32;1m42 passed[39;22m[90m (97 assertions)[39m
-  [90mDuration:[39m [39m25.40s[39m
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\RowLevelSecurityTest[39m
+  [32;1mΓ£ô[39;22m[90m [39m[90mti016 company context switches on one[39m[90mΓÇª [39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 without company context no invit[39m[90mΓÇª[39m [90m0.50s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 insert without company context i[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti016 insert for another company is re[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 row level security is enabled on[39m[90mΓÇª[39m [90m0.06s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 runtime role cannot disable row[39m[90mΓÇª [39m [90m0.06s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti010 company id in request body is ig[39m[90mΓÇª[39m [90m0.36s[39m  
+
+  [90mTests:[39m    [32;1m49 passed[39;22m[90m (108 assertions)[39m
+  [90mDuration:[39m [39m28.22s[39m
 

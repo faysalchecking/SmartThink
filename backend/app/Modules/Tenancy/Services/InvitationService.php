@@ -4,6 +4,7 @@ namespace App\Modules\Tenancy\Services;
 
 use App\Models\User;
 use App\Modules\Audit\Services\AuditLogger;
+use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyRole;
 use App\Modules\Tenancy\Enums\MembershipStatus;
 use App\Modules\Tenancy\Models\Company;
@@ -19,7 +20,10 @@ final class InvitationService
 
     private const GENERIC_INVALID = 'This invitation is not valid or has expired.';
 
-    public function __construct(private readonly AuditLogger $audit) {}
+    public function __construct(
+        private readonly AuditLogger $audit,
+        private readonly TenantDatabaseContext $database,
+    ) {}
 
     /**
      * Returns the raw token exactly once. Only its SHA-256 hash is stored.
@@ -76,14 +80,35 @@ final class InvitationService
     }
 
     /**
-     * Accepts an invitation. Either the signed-in user with the invited email accepts it,
-     * or a new account is created with the given name and password.
+     * Accepts an invitation. The public endpoint has no company context yet, so the company is
+     * resolved first by a narrow lookup on the token hash. Then RLS is set for that company only.
      */
     public function accept(string $rawToken, ?User $signedIn, ?string $name, ?string $password): Membership
     {
-        return DB::transaction(function () use ($rawToken, $signedIn, $name, $password): Membership {
+        $tokenHash = hash('sha256', $rawToken);
+
+        $companyId = DB::connection('pgsql')
+            ->selectOne('SELECT invitation_company_for_token(?) AS company_id', [$tokenHash])
+            ?->company_id;
+
+        if ($companyId === null) {
+            throw $this->invalid();
+        }
+
+        $this->database->apply((string) $companyId);
+
+        try {
+            return $this->acceptWithin($tokenHash, $signedIn, $name, $password);
+        } finally {
+            $this->database->clear();
+        }
+    }
+
+    private function acceptWithin(string $tokenHash, ?User $signedIn, ?string $name, ?string $password): Membership
+    {
+        return DB::transaction(function () use ($tokenHash, $signedIn, $name, $password): Membership {
             $invitation = Invitation::query()
-                ->where('token_hash', hash('sha256', $rawToken))
+                ->where('token_hash', $tokenHash)
                 ->whereNull('accepted_at')
                 ->whereNull('revoked_at')
                 ->where('expires_at', '>', now())

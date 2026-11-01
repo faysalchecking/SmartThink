@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyRole;
 use App\Modules\Tenancy\Enums\CompanyStatus;
 use App\Modules\Tenancy\Enums\MembershipStatus;
@@ -85,5 +86,12 @@ abstract class TestCase extends BaseTestCase
             'role' => $role,
             'status' => $status,
         ]);
+    }
+
+    protected function tearDown(): void
+    {
+        app(TenantDatabaseContext::class)->clear();
+
+        parent::tearDown();
     }
 }

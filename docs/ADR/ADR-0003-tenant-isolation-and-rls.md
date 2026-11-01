@@ -29,3 +29,7 @@ If the spike fails, RLS is removed from the plan. Layers 1 and 2 stay, the test 
 
 ## Trade-off
 RLS adds migration and debugging work. It protects against one forgotten `where('company_id', ...)`, which is the most common cause of cross-tenant data leaks.
+## Amendment (Phase 2 B2b, 2026-10-29)
+- Spike passed on invitations: TI-016 (company switch on one connection), TI-017 (no context means zero rows, insert refused, RLS cannot be disabled by runtime role).
+- ENABLE instead of FORCE, see D-25. The migration role owns the tables and never serves requests.
+- Company context is set with set_config(..., false) in ResolveCompany and cleared in a finally block. Accept uses the narrow function first, then sets context.
