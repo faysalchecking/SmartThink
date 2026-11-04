@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HealthController;
 use App\Modules\Identity\Http\Controllers\AuthController;
+use App\Modules\Recruitment\Http\Controllers\ClientController;
+use App\Modules\Recruitment\Http\Controllers\JobOrderController;
 use App\Modules\Tenancy\Http\Controllers\CompanyController;
 use App\Modules\Tenancy\Http\Controllers\InvitationController;
 use App\Modules\Tenancy\Http\Controllers\MemberController;
@@ -45,5 +47,14 @@ Route::prefix('v1')->group(function (): void {
             Route::get('/members', [MemberController::class, 'index'])->name('members.index');
             Route::patch('/members/{member}', [MemberController::class, 'update'])->name('members.update');
             Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+            Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+            Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+            Route::get('/clients/{client}', [ClientController::class, 'show'])->name('clients.show');
+            Route::patch('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+
+            Route::get('/jobs', [JobOrderController::class, 'index'])->name('jobs.index');
+            Route::post('/jobs', [JobOrderController::class, 'store'])->name('jobs.store');
+            Route::get('/jobs/{job}', [JobOrderController::class, 'show'])->name('jobs.show');
+            Route::patch('/jobs/{job}', [JobOrderController::class, 'update'])->name('jobs.update');
         });
 });

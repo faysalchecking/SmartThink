@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Modules\Tenancy\Context\TenantContext;
 use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyRole;
 use App\Modules\Tenancy\Enums\CompanyStatus;
@@ -86,6 +87,26 @@ abstract class TestCase extends BaseTestCase
             'role' => $role,
             'status' => $status,
         ]);
+    }
+
+    /**
+     * Runs a callback with the company set in both layers (application scope and database RLS),
+     * then clears both. Use this in tests that read or write tenant data directly.
+     */
+    protected function inCompany(Company $company, callable $callback): mixed
+    {
+        $tenant = app(TenantContext::class);
+        $database = app(TenantDatabaseContext::class);
+
+        $tenant->set($company->id);
+        $database->apply($company->id);
+
+        try {
+            return $callback();
+        } finally {
+            $tenant->clear();
+            $database->clear();
+        }
     }
 
     protected function tearDown(): void
