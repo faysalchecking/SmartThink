@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Audit\Services\AuditLogger;
 use App\Modules\Identity\Http\Requests\LoginRequest;
+use App\Modules\Identity\Http\Requests\PasswordChangeRequest;
 use App\Modules\Identity\Http\Resources\UserResource;
+use App\Modules\Identity\Services\PasswordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +16,10 @@ use Illuminate\Support\Str;
 
 final class AuthController extends Controller
 {
-    public function __construct(private readonly AuditLogger $audit) {}
+    public function __construct(
+        private readonly AuditLogger $audit,
+        private readonly PasswordService $passwords,
+    ) {}
 
     public function login(LoginRequest $request): JsonResponse
     {
@@ -89,5 +94,20 @@ final class AuthController extends Controller
         }
 
         return UserResource::make($user)->response();
+    }
+
+    public function changePassword(PasswordChangeRequest $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['error' => ['code' => 'UNAUTHENTICATED', 'message' => 'Authentication is required.']], 401);
+        }
+
+        $data = $request->validated();
+
+        $this->passwords->change($user, (string) $data['password'], $request);
+
+        return response()->json(null, 204);
     }
 }

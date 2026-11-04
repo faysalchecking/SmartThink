@@ -84,3 +84,7 @@ Base path: `/api/v1`. JSON only (except file upload and download). Errors use on
 2. Validates params, query, and body with zod before the service layer.
 3. Returns DTOs without password hashes, token hashes, storage keys, or internal IDs.
 4. Writes an audit row for privileged or data-changing actions.
+## Account
+| Method | Path | Permission | Phase |
+|---|---|---|---|
+| PATCH | /auth/password | authenticated; requires current password | 2 (B3) |

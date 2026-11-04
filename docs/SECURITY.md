@@ -81,3 +81,4 @@ Status: design. Nothing here is implemented yet. Each control has a test that mu
 - No malware scanning in the MVP.
 - Single server: no high availability.
 - No results are claimed here. Real results are recorded in TESTING.md and PHASE_STATUS.md.
+- Implemented in Phase 2 B3: PATCH /auth/password requires the current password, rotates the current session ID, deletes all other sessions of the user, and writes audit event auth.password_changed (no password in metadata).

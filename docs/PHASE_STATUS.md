@@ -95,3 +95,4 @@ Open (not done in Phase 2):
 Known limitations:
 - Frontend has no UI for auth or companies yet. Phase 2 is API-only. Login screens belong to Phase 3 with the first real screens.
 - Invitations have no email delivery (D-22). Token is shown to the admin once.
+- Password change (B3): current password check, other sessions deleted, session ID rotated, audited. Tests: PasswordChangeTest (6 tests).

@@ -22,6 +22,7 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware(['auth', 'active'])->group(function (): void {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
         Route::get('/auth/me', [AuthController::class, 'me'])->name('auth.me');
+        Route::patch('/auth/password', [AuthController::class, 'changePassword'])->name('auth.password');
     });
 
     Route::middleware(['auth', 'active', 'platform.admin'])
