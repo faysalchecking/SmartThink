@@ -59,3 +59,5 @@ Last updated: 2026-10-29
 | D-32 | Every company gets eight default stages, including overseas stages. Companies may disable overseas stages when no active application uses them | Overseas workflow is available, but not forced on domestic agencies | Active |
 | D-33 | stage_history is append-only: trigger, REVOKE UPDATE, DELETE, TRUNCATE for the runtime role, and model events | Application history must be trustworthy for audits | Active |
 | R-20 | Full passport number is not yet returned by any endpoint. A permission-controlled reveal comes with documents in Phase 4 | Least exposure until a permission model exists | Open |
+| D-34 | Any active company member can schedule interviews and record results. Interviewer must be an active member of the same company | Same first-batch permission model as D-28 | Active |
+| D-35 | Dashboard counts run inside the company context, so RLS and the application scope both apply | Prevents cross-company totals (TI-014) | Active |

@@ -104,3 +104,13 @@ Implemented: clients, job orders, composite foreign key (job to client of same c
 Status: IN PROGRESS. Code written, owner verification pending.
 Scope: candidates (create, edit, archive, search), default and configurable pipeline stages with overseas kinds, applications with first-stage start, stage moves with history, append-only stage history, RLS on all new tables, composite foreign keys for same-company references.
 Not in 3B: interviews, dashboard, pagination review (3C).
+## Phase 3B: Candidates, pipeline stages, applications, stage history
+Status: COMPLETE, PENDING OWNER APPROVAL
+Evidence: scripts\check.ps1 ALL CHECKS PASSED. CandidatePipelineTest 17 tests passing. Full suite 79+ tests passing.
+Implemented: candidates (create, edit, archive, search with escaped LIKE), passport encrypted at rest and masked in API, eight default pipeline stages with overseas kind, admin-only stage configuration, applications starting at first enabled stage, stage moves with append-only history, terminal stage closes application, RLS and composite foreign keys on all new tables.
+Open: interviews, dashboard, pagination review (Phase 3C).
+## Phase 3C: Interviews, dashboard, pagination review
+Status: CODE COMPLETE, OWNER VERIFICATION PENDING
+Implemented: interviews (schedule, record result, notes, reschedule), interview list filtered by application, dashboard counts (active candidates, active and placed applications, open jobs, upcoming interviews, active applications per stage), tests for scope and status rules.
+Pagination: all list endpoints cap per_page at 100 (verified by existing code, not yet load-tested).
+Not in 3C: React screens (separate UI batch), performance test on large seed data (Phase 6).

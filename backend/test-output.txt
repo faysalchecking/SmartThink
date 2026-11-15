@@ -1,107 +1,119 @@
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Audit\AuditLogTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mcompany creation is audited with actor[39m[90m  [39m [90m0.75s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90msensitive metadata is redacted before s[39m[90mΓÇª[39m [90m0.06s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90maudit model refuses updates[39m[90m             [39m [90m0.09s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mruntime role cannot update audit rows i[39m[90mΓÇª[39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcompany creation is audited with ac[39m[90mΓÇª[39m [90m0.85s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90msensitive metadata is redacted befo[39m[90mΓÇª[39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90maudit model refuses updates[39m[90m         [39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mruntime role cannot update audit ro[39m[90mΓÇª[39m [90m0.07s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\HealthTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns ok when database respond[39m[90mΓÇª[39m [90m0.07s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns unavailable without inte[39m[90mΓÇª[39m [90m8.20s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns ok when database res[39m[90mΓÇª[39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mhealth returns unavailable without[39m[90mΓÇª [39m [90m8.24s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Identity\AccountStatusTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account loses an existing sess[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account cannot access company[39m[90mΓÇª [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account loses an existing[39m[90mΓÇª [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled account cannot access comp[39m[90mΓÇª[39m [90m0.44s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Identity\AuthTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin with valid credentials returns us[39m[90mΓÇª[39m [90m0.61s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mwrong password and unknown email return[39m[90mΓÇª[39m [90m0.78s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled user cannot log in[39m[90m             [39m [90m0.53s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin is rate limited after five attemp[39m[90mΓÇª[39m [90m1.52s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mme requires authentication[39m[90m              [39m [90m0.06s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mme returns the signed in user[39m[90m           [39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogout returns no content[39m[90m               [39m [90m0.30s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin with valid credentials return[39m[90mΓÇª[39m [90m0.60s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mwrong password and unknown email re[39m[90mΓÇª[39m [90m0.90s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdisabled user cannot log in[39m[90m         [39m [90m0.53s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin is rate limited after five at[39m[90mΓÇª[39m [90m1.58s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mme requires authentication[39m[90m          [39m [90m0.06s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mme returns the signed in user[39m[90m       [39m [90m0.31s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogout returns no content[39m[90m           [39m [90m0.31s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Identity\PasswordChangeTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90munauthenticated request is rejected[39m[90m     [39m [90m0.06s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mwrong current password is rejected and[39m[90mΓÇª [39m [90m0.94s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mshort new password is rejected[39m[90m          [39m [90m0.55s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mnew password replaces the old one[39m[90m       [39m [90m1.31s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mother sessions of the user are deleted[39m[90m  [39m [90m0.80s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mpassword change is audited without the[39m[90mΓÇª [39m [90m0.81s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90munauthenticated request is rejected[39m[90m [39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mwrong current password is rejected[39m[90mΓÇª [39m [90m0.82s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mshort new password is rejected[39m[90m      [39m [90m0.54s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mnew password replaces the old one[39m[90m   [39m [90m1.29s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mother sessions of the user are dele[39m[90mΓÇª[39m [90m0.81s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mpassword change is audited without[39m[90mΓÇª [39m [90m0.79s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Recruitment\CandidatePipelineTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mdefault pipeline is seeded with oversea[39m[90mΓÇª[39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot create or change pipeli[39m[90mΓÇª[39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin can add a stage and disable an un[39m[90mΓÇª[39m [90m0.36s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate passport is encrypted at rest[39m[90mΓÇª[39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate of another company is not fou[39m[90mΓÇª[39m [90m0.60s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90marchived candidates are hidden unless r[39m[90mΓÇª[39m [90m0.36s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90msearch matches only the own company[39m[90m     [39m [90m0.59s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mapplication starts in the first enabled[39m[90mΓÇª[39m [90m0.37s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mapplication to a closed job is rejected[39m[90m [39m [90m0.36s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90msame candidate cannot apply twice to on[39m[90mΓÇª[39m [90m0.49s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate of another company cannot be[39m[90mΓÇª [39m [90m0.60s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mstage move is recorded in history and a[39m[90mΓÇª[39m [90m0.39s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmoving to terminal stage places candida[39m[90mΓÇª[39m [90m0.39s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mstage of another company cannot be used[39m[90m [39m [90m0.40s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mstage with active applications cannot b[39m[90mΓÇª[39m [90m0.38s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mhistory rows cannot be changed even by[39m[90mΓÇª [39m [90m0.37s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate rows are invisible without co[39m[90mΓÇª[39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdefault pipeline is seeded with ove[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot create or change pi[39m[90mΓÇª[39m [90m0.36s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin can add a stage and disable a[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate passport is encrypted at[39m[90mΓÇª [39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate of another company is not[39m[90mΓÇª[39m [90m0.72s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90marchived candidates are hidden unle[39m[90mΓÇª[39m [90m0.38s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90msearch matches only the own company[39m[90m [39m [90m0.61s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mapplication starts in the first ena[39m[90mΓÇª[39m [90m0.38s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mapplication to a closed job is reje[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90msame candidate cannot apply twice t[39m[90mΓÇª[39m [90m0.37s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate of another company cannot[39m[90mΓÇª[39m [90m0.59s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mstage move is recorded in history a[39m[90mΓÇª[39m [90m0.52s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmoving to terminal stage places can[39m[90mΓÇª[39m [90m0.39s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mstage of another company cannot be[39m[90mΓÇª [39m [90m0.38s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mstage with active applications cann[39m[90mΓÇª[39m [90m0.38s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mhistory rows cannot be changed even[39m[90mΓÇª[39m [90m0.50s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcandidate rows are invisible withou[39m[90mΓÇª[39m [90m0.33s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Recruitment\ClientJobTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee creates a client in own compan[39m[90mΓÇª[39m [90m0.35s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mclient of another company is not found[39m[90m  [39m [90m0.61s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mcompany id in body is ignored when crea[39m[90mΓÇª[39m [90m0.59s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mjob can reference a client of the same[39m[90mΓÇª [39m [90m0.37s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mjob cannot reference a client of anothe[39m[90mΓÇª[39m [90m0.65s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdatabase refuses a job pointing at anot[39m[90mΓÇª[39m [90m0.58s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90minvalid job status is rejected and vali[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee creates a client in own co[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mclient of another company is not fo[39m[90mΓÇª[39m [90m0.72s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mcompany id in body is ignored when[39m[90mΓÇª [39m [90m0.60s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mjob can reference a client of the s[39m[90mΓÇª[39m [90m0.46s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mjob cannot reference a client of an[39m[90mΓÇª[39m [90m0.60s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdatabase refuses a job pointing at[39m[90mΓÇª [39m [90m0.59s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minvalid job status is rejected and[39m[90mΓÇª [39m [90m0.34s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Recruitment\InterviewDashboardTest[39m
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee schedules an interview for[39m[90mΓÇª[39m [90m0.37s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minterviewer from another company is[39m[90mΓÇª[39m [90m0.61s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mapplication of another company cann[39m[90mΓÇª[39m [90m0.61s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minterview cannot be scheduled for a[39m[90mΓÇª[39m [90m0.50s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mresult can be recorded and is audit[39m[90mΓÇª[39m [90m0.49s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90munknown result value is rejected[39m[90m    [39m [90m0.49s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minterview of another company is not[39m[90mΓÇª[39m [90m0.60s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minterview list shows only own compa[39m[90mΓÇª[39m [90m0.61s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdashboard counts are exact and excl[39m[90mΓÇª[39m [90m0.62s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mupdate of unknown interview returns[39m[90mΓÇª[39m [90m0.44s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\SchemaHealthMigrationTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mschema health table exists after migrat[39m[90mΓÇª[39m [90m0.07s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mschema health table exists after mi[39m[90mΓÇª[39m [90m0.08s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Security\CsrfTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogout without csrf token is rejected[39m[90m   [39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlogin without csrf token is rejected[39m[90m    [39m [90m0.30s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogout without csrf token is reject[39m[90mΓÇª[39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlogin without csrf token is rejecte[39m[90mΓÇª[39m [90m0.30s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\CompanyAccessTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mnon member gets 404 for a company[39m[90m       [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmalformed company id gets 404[39m[90m           [39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin of company a cannot read or updat[39m[90mΓÇª[39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmember can read own company[39m[90m             [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot update company settings[39m[90m [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin can update company and change is[39m[90mΓÇª [39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mmembers of suspended company get 403[39m[90m    [39m [90m0.34s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership gets 404[39m[90m         [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mregular user cannot use platform routes[39m[90m [39m [90m0.30s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mplatform admin creates pending company[39m[90m  [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mduplicate slug is rejected[39m[90m              [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mpending company can be activated but no[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mnon member gets 404 for a company[39m[90m   [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmalformed company id gets 404[39m[90m       [39m [90m0.31s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin of company a cannot read or u[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmember can read own company[39m[90m         [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot update company sett[39m[90mΓÇª[39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin can update company and change[39m[90mΓÇª[39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mmembers of suspended company get 40[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership gets 404[39m[90m     [39m [90m0.34s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mregular user cannot use platform ro[39m[90mΓÇª[39m [90m0.30s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mplatform admin creates pending comp[39m[90mΓÇª[39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mduplicate slug is rejected[39m[90m          [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mpending company can be activated bu[39m[90mΓÇª[39m [90m0.33s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\MembershipTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin invitation stores only the token[39m[90mΓÇª [39m [90m0.35s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot invite[39m[90m                  [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90minvitee creates account and becomes an[39m[90mΓÇª [39m [90m0.63s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90minvitation cannot be used twice[39m[90m         [39m [90m0.59s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mexpired invitation is rejected[39m[90m          [39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90msigned in user with a different email c[39m[90mΓÇª[39m [90m0.63s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin cannot change a membership of ano[39m[90mΓÇª[39m [90m0.65s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin deactivation is persisted and aud[39m[90mΓÇª[39m [90m0.61s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership cannot access co[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mlast active admin cannot be demoted[39m[90m     [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot list members[39m[90m            [39m [90m0.33s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90madmin sees only own company members[39m[90m     [39m [90m0.94s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin invitation stores only the to[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot invite[39m[90m              [39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minvitee creates account and becomes[39m[90mΓÇª[39m [90m0.58s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90minvitation cannot be used twice[39m[90m     [39m [90m0.72s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mexpired invitation is rejected[39m[90m      [39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90msigned in user with a different ema[39m[90mΓÇª[39m [90m0.58s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin cannot change a membership of[39m[90mΓÇª[39m [90m0.58s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin deactivation is persisted and[39m[90mΓÇª[39m [90m0.58s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mdeactivated membership cannot acces[39m[90mΓÇª[39m [90m0.32s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mlast active admin cannot be demoted[39m[90m [39m [90m0.45s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90memployee cannot list members[39m[90m        [39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90madmin sees only own company members[39m[90m [39m [90m0.83s[39m  
 
   [30;42;1m PASS [39;49;22m[39m Tests\Feature\Tenancy\RowLevelSecurityTest[39m
-  [32;1mΓ£ô[39;22m[90m [39m[90mti016 company context switches on one c[39m[90mΓÇª[39m [90m0.35s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti017 without company context no invita[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti017 insert without company context is[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti016 insert for another company is ref[39m[90mΓÇª[39m [90m0.32s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti017 row level security is enabled on[39m[90mΓÇª [39m [90m0.06s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti017 runtime role cannot disable row l[39m[90mΓÇª[39m [90m0.18s[39m  
-  [32;1mΓ£ô[39;22m[90m [39m[90mti010 company id in request body is ign[39m[90mΓÇª[39m [90m0.35s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti016 company context switches on o[39m[90mΓÇª[39m [90m0.46s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 without company context no in[39m[90mΓÇª[39m [90m0.45s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 insert without company contex[39m[90mΓÇª[39m [90m0.31s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti016 insert for another company is[39m[90mΓÇª[39m [90m0.33s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 row level security is enabled[39m[90mΓÇª[39m [90m0.19s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti017 runtime role cannot disable r[39m[90mΓÇª[39m [90m0.06s[39m  
+  [32;1mΓ£ô[39;22m[90m [39m[90mti010 company id in request body is[39m[90mΓÇª[39m [90m0.34s[39m  
 
-  [90mTests:[39m    [32;1m79 passed[39;22m[90m (204 assertions)[39m
-  [90mDuration:[39m [39m41.94s[39m
+  [90mTests:[39m    [32;1m89 passed[39;22m[90m (228 assertions)[39m
+  [90mDuration:[39m [39m48.18s[39m
 

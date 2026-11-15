@@ -5,6 +5,8 @@ use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Recruitment\Http\Controllers\ApplicationController;
 use App\Modules\Recruitment\Http\Controllers\CandidateController;
 use App\Modules\Recruitment\Http\Controllers\ClientController;
+use App\Modules\Recruitment\Http\Controllers\DashboardController;
+use App\Modules\Recruitment\Http\Controllers\InterviewController;
 use App\Modules\Recruitment\Http\Controllers\JobOrderController;
 use App\Modules\Recruitment\Http\Controllers\PipelineStageController;
 use App\Modules\Tenancy\Http\Controllers\CompanyController;
@@ -74,5 +76,11 @@ Route::prefix('v1')->group(function (): void {
             Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
             Route::patch('/applications/{application}/stage', [ApplicationController::class, 'moveStage'])->name('applications.stage');
             Route::get('/applications/{application}/history', [ApplicationController::class, 'history'])->name('applications.history');
+
+            Route::get('/interviews', [InterviewController::class, 'index'])->name('interviews.index');
+            Route::post('/interviews', [InterviewController::class, 'store'])->name('interviews.store');
+            Route::patch('/interviews/{interview}', [InterviewController::class, 'update'])->name('interviews.update');
+
+            Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
         });
 });
