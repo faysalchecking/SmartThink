@@ -3,6 +3,7 @@
 namespace App\Modules\Tenancy\Services;
 
 use App\Modules\Audit\Services\AuditLogger;
+use App\Modules\Recruitment\Services\PipelineStageSeeder;
 use App\Modules\Tenancy\Enums\CompanyStatus;
 use App\Modules\Tenancy\Models\Company;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,10 @@ use Illuminate\Validation\ValidationException;
 
 final class CompanyService
 {
-    public function __construct(private readonly AuditLogger $audit) {}
+    public function __construct(
+        private readonly AuditLogger $audit,
+        private readonly PipelineStageSeeder $stages,
+    ) {}
 
     public function create(string $name, string $slug, int $actorId): Company
     {
@@ -30,6 +34,8 @@ final class CompanyService
                 companyId: $company->id,
                 metadata: ['slug' => $slug],
             );
+
+            $this->stages->seed($company->id);
 
             return $company;
         });

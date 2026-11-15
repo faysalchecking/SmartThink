@@ -96,3 +96,11 @@ Known limitations:
 - Frontend has no UI for auth or companies yet. Phase 2 is API-only. Login screens belong to Phase 3 with the first real screens.
 - Invitations have no email delivery (D-22). Token is shown to the admin once.
 - Password change (B3): current password check, other sessions deleted, session ID rotated, audited. Tests: PasswordChangeTest (6 tests).
+## Phase 3A: Clients and job orders
+Status: COMPLETE, OWNER APPROVED (2026-10-29)
+Evidence: ClientJobTest 7 tests passing, full suite passing, Pint and Larastan clean, scripts\check.ps1 ALL CHECKS PASSED.
+Implemented: clients, job orders, composite foreign key (job to client of same company), RLS on both, BelongsToCompany trait, route parameters read by name.
+## Phase 3B: Candidates, pipeline stages, applications, stage history
+Status: IN PROGRESS. Code written, owner verification pending.
+Scope: candidates (create, edit, archive, search), default and configurable pipeline stages with overseas kinds, applications with first-stage start, stage moves with history, append-only stage history, RLS on all new tables, composite foreign keys for same-company references.
+Not in 3B: interviews, dashboard, pagination review (3C).

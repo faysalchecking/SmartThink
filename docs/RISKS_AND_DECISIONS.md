@@ -52,3 +52,10 @@ Last updated: 2026-10-29
 3. Approve installing PHP and Composer, after the audit output is reviewed.
 4. Confirm that the GitHub token shared in chat is revoked (R-06).
 5. Approve `smartthink_test` migrations through `smartthink_migrator`, as in D-10.
+| D-25 | RLS is ENABLE, not FORCE. The owner role is the migration role, which never serves requests. Runtime role has no BYPASSRLS and is not the owner | FORCE would also restrict the invitation lookup function, which must run before a company is known | Active |
+| D-26 | RLS covers invitations only for now. memberships (keyed by user, read before company is known) and audit_logs (includes platform rows) are protected by ResolveCompany, grants, and triggers instead | Keeps the spike small. Candidates and later tenant tables get RLS from Phase 3 | Active |
+| D-27 | Public invitation accept uses SECURITY DEFINER function invitation_company_for_token, which returns only a company ID | Only way to find the company for a token before any company context exists | Active |
+| D-31 | Candidate passport number is stored with Laravel's encrypted cast, and the API returns only the last three characters | Protects the most sensitive identifier at rest. Depends on APP_KEY, see R-18 | Active |
+| D-32 | Every company gets eight default stages, including overseas stages. Companies may disable overseas stages when no active application uses them | Overseas workflow is available, but not forced on domestic agencies | Active |
+| D-33 | stage_history is append-only: trigger, REVOKE UPDATE, DELETE, TRUNCATE for the runtime role, and model events | Application history must be trustworthy for audits | Active |
+| R-20 | Full passport number is not yet returned by any endpoint. A permission-controlled reveal comes with documents in Phase 4 | Least exposure until a permission model exists | Open |

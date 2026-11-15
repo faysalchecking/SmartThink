@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\HealthController;
 use App\Modules\Identity\Http\Controllers\AuthController;
+use App\Modules\Recruitment\Http\Controllers\ApplicationController;
+use App\Modules\Recruitment\Http\Controllers\CandidateController;
 use App\Modules\Recruitment\Http\Controllers\ClientController;
 use App\Modules\Recruitment\Http\Controllers\JobOrderController;
+use App\Modules\Recruitment\Http\Controllers\PipelineStageController;
 use App\Modules\Tenancy\Http\Controllers\CompanyController;
 use App\Modules\Tenancy\Http\Controllers\InvitationController;
 use App\Modules\Tenancy\Http\Controllers\MemberController;
@@ -47,6 +50,7 @@ Route::prefix('v1')->group(function (): void {
             Route::get('/members', [MemberController::class, 'index'])->name('members.index');
             Route::patch('/members/{member}', [MemberController::class, 'update'])->name('members.update');
             Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+
             Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
             Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
             Route::get('/clients/{client}', [ClientController::class, 'show'])->name('clients.show');
@@ -56,5 +60,19 @@ Route::prefix('v1')->group(function (): void {
             Route::post('/jobs', [JobOrderController::class, 'store'])->name('jobs.store');
             Route::get('/jobs/{job}', [JobOrderController::class, 'show'])->name('jobs.show');
             Route::patch('/jobs/{job}', [JobOrderController::class, 'update'])->name('jobs.update');
+
+            Route::get('/pipeline-stages', [PipelineStageController::class, 'index'])->name('pipeline-stages.index');
+            Route::post('/pipeline-stages', [PipelineStageController::class, 'store'])->name('pipeline-stages.store');
+            Route::patch('/pipeline-stages/{stage}', [PipelineStageController::class, 'update'])->name('pipeline-stages.update');
+
+            Route::get('/candidates', [CandidateController::class, 'index'])->name('candidates.index');
+            Route::post('/candidates', [CandidateController::class, 'store'])->name('candidates.store');
+            Route::get('/candidates/{candidate}', [CandidateController::class, 'show'])->name('candidates.show');
+            Route::patch('/candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
+            Route::post('/candidates/{candidate}/archive', [CandidateController::class, 'archive'])->name('candidates.archive');
+
+            Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+            Route::patch('/applications/{application}/stage', [ApplicationController::class, 'moveStage'])->name('applications.stage');
+            Route::get('/applications/{application}/history', [ApplicationController::class, 'history'])->name('applications.history');
         });
 });

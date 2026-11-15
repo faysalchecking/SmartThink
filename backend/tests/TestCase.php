@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Modules\Recruitment\Services\PipelineStageSeeder;
 use App\Modules\Tenancy\Context\TenantContext;
 use App\Modules\Tenancy\Context\TenantDatabaseContext;
 use App\Modules\Tenancy\Enums\CompanyRole;
@@ -68,11 +69,16 @@ abstract class TestCase extends BaseTestCase
 
     protected function makeCompany(CompanyStatus $status = CompanyStatus::Active, string $name = 'Test Company'): Company
     {
-        return Company::query()->create([
+        $company = Company::query()->create([
             'name' => $name,
             'slug' => 'co-'.Str::lower(Str::random(10)),
             'status' => $status,
         ]);
+
+        // Every company gets its default pipeline, exactly as the real company creation does.
+        app(PipelineStageSeeder::class)->seed($company->id);
+
+        return $company;
     }
 
     protected function makeMembership(

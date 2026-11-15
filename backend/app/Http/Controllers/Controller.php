@@ -7,6 +7,7 @@ use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
 use App\Modules\Tenancy\Models\Membership;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 use LogicException;
 
 abstract class Controller extends BaseController
@@ -31,5 +32,20 @@ abstract class Controller extends BaseController
         }
 
         return $membership;
+    }
+
+    /**
+     * Reads a UUID route parameter by name. Malformed values are treated as not found.
+     * Never read route values by controller argument position.
+     */
+    protected function routeUuid(Request $request, string $name): string
+    {
+        $value = (string) $request->route($name);
+
+        if (! Str::isUuid($value)) {
+            abort(404);
+        }
+
+        return $value;
     }
 }
