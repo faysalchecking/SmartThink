@@ -61,3 +61,7 @@ Last updated: 2026-10-29
 | R-20 | Full passport number is not yet returned by any endpoint. A permission-controlled reveal comes with documents in Phase 4 | Least exposure until a permission model exists | Open |
 | D-34 | Any active company member can schedule interviews and record results. Interviewer must be an active member of the same company | Same first-batch permission model as D-28 | Active |
 | D-35 | Dashboard counts run inside the company context, so RLS and the application scope both apply | Prevents cross-company totals (TI-014) | Active |
+| D-36 | Documents use the Laravel `local` disk, whose root is storage/app/private, outside public/. This replaces the disk name "private" in ADR-0004 | Laravel's default private disk is already outside the web root, so no config change is needed | Active |
+| D-37 | File type is checked in three places: the mimes rule, the magic-byte signature, and the size limit. Extension and browser type are never trusted | Blocks disguised files | Active |
+| D-38 | Any active company member can upload, download, and review documents in this batch. Finer document permissions come with the permission model | Same first-batch model as D-28 | Active |
+| R-21 | No malware scanning on uploads | Accepted risk until Phase 6 decision | Open |

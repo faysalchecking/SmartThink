@@ -114,3 +114,9 @@ Status: CODE COMPLETE, OWNER VERIFICATION PENDING
 Implemented: interviews (schedule, record result, notes, reschedule), interview list filtered by application, dashboard counts (active candidates, active and placed applications, open jobs, upcoming interviews, active applications per stage), tests for scope and status rules.
 Pagination: all list endpoints cap per_page at 100 (verified by existing code, not yet load-tested).
 Not in 3C: React screens (separate UI batch), performance test on large seed data (Phase 6).
+## Phase 3C: Interviews, dashboard, pagination review
+Status: COMPLETE, OWNER VERIFIED (2026-10-29). InterviewDashboardTest 9 tests passing, scripts\check.ps1 ALL CHECKS PASSED.
+## Phase 4A: Documents
+Status: CODE COMPLETE, OWNER VERIFICATION PENDING
+Implemented: upload (PDF, JPEG, PNG, max 10 MB, magic-byte check), random storage key, SHA-256 recorded, download as attachment with nosniff and audit, review (verified or rejected with reason), soft archive that keeps the file, company scope on every route, RLS and composite foreign key on documents.
+Not in 4A: CV builder (4B), PDF export (4C).

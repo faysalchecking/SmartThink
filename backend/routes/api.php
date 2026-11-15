@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HealthController;
+use App\Modules\Documents\Http\Controllers\DocumentController;
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Recruitment\Http\Controllers\ApplicationController;
 use App\Modules\Recruitment\Http\Controllers\CandidateController;
@@ -82,5 +83,10 @@ Route::prefix('v1')->group(function (): void {
             Route::patch('/interviews/{interview}', [InterviewController::class, 'update'])->name('interviews.update');
 
             Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
+            Route::get('/candidates/{candidate}/documents', [DocumentController::class, 'index'])->name('documents.index');
+            Route::post('/candidates/{candidate}/documents', [DocumentController::class, 'store'])->name('documents.store');
+            Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+            Route::patch('/documents/{document}/review', [DocumentController::class, 'review'])->name('documents.review');
+            Route::post('/documents/{document}/archive', [DocumentController::class, 'archive'])->name('documents.archive');
         });
 });
