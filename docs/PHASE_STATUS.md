@@ -120,3 +120,9 @@ Status: COMPLETE, OWNER VERIFIED (2026-10-29). InterviewDashboardTest 9 tests pa
 Status: CODE COMPLETE, OWNER VERIFICATION PENDING
 Implemented: upload (PDF, JPEG, PNG, max 10 MB, magic-byte check), random storage key, SHA-256 recorded, download as attachment with nosniff and audit, review (verified or rejected with reason), soft archive that keeps the file, company scope on every route, RLS and composite foreign key on documents.
 Not in 4A: CV builder (4B), PDF export (4C).
+## Phase 4A: Documents
+Status: COMPLETE, OWNER VERIFIED. DocumentTest 11 tests passing, scripts\check.ps1 ALL CHECKS PASSED.
+## Phase 4B: CV drafts
+Status: CODE COMPLETE, OWNER VERIFICATION PENDING
+Implemented: draft created from verified candidate fields, edit (content, order, optional visibility, template), missing-field preview, review with fingerprint, automatic review reset on edit, database check that a reviewed draft has fingerprint and reviewer.
+Not in 4B: PDF rendering and the export gate (4C).

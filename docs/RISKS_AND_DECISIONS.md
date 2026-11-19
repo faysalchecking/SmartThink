@@ -65,3 +65,7 @@ Last updated: 2026-10-29
 | D-37 | File type is checked in three places: the mimes rule, the magic-byte signature, and the size limit. Extension and browser type are never trusted | Blocks disguised files | Active |
 | D-38 | Any active company member can upload, download, and review documents in this batch. Finer document permissions come with the permission model | Same first-batch model as D-28 | Active |
 | R-21 | No malware scanning on uploads | Accepted risk until Phase 6 decision | Open |
+| D-39 | A CV draft is a copy of the candidate fields at creation time. Editing a draft never changes the candidate record | Keeps the verified master data clean; the CV can be tailored per job | Active |
+| D-40 | Review stores a SHA-256 fingerprint of content, section order, visibility and template. Any later change clears the review. The 4C export must check the fingerprint before rendering | Stops a PDF being produced from content that was not reviewed | Active |
+| D-41 | Template keys are fixed in code (classic, modern, compact). Rendering is added in 4C | Keeps templates deterministic and testable | Active |
+| D-42 | Passport number is never copied into a CV | Least exposure of the most sensitive identifier | Active |

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HealthController;
+use App\Modules\Cv\Http\Controllers\CvDraftController;
 use App\Modules\Documents\Http\Controllers\DocumentController;
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Recruitment\Http\Controllers\ApplicationController;
@@ -88,5 +89,11 @@ Route::prefix('v1')->group(function (): void {
             Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
             Route::patch('/documents/{document}/review', [DocumentController::class, 'review'])->name('documents.review');
             Route::post('/documents/{document}/archive', [DocumentController::class, 'archive'])->name('documents.archive');
+            Route::get('/candidates/{candidate}/cv-drafts', [CvDraftController::class, 'index'])->name('cv-drafts.index');
+            Route::post('/candidates/{candidate}/cv-drafts', [CvDraftController::class, 'store'])->name('cv-drafts.store');
+            Route::get('/cv-drafts/{draft}', [CvDraftController::class, 'show'])->name('cv-drafts.show');
+            Route::patch('/cv-drafts/{draft}', [CvDraftController::class, 'update'])->name('cv-drafts.update');
+            Route::post('/cv-drafts/{draft}/review', [CvDraftController::class, 'review'])->name('cv-drafts.review');
+            Route::get('/cv-drafts/{draft}/preview', [CvDraftController::class, 'preview'])->name('cv-drafts.preview');
         });
 });
