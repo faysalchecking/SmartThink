@@ -126,3 +126,7 @@ Status: COMPLETE, OWNER VERIFIED. DocumentTest 11 tests passing, scripts\check.p
 Status: CODE COMPLETE, OWNER VERIFICATION PENDING
 Implemented: draft created from verified candidate fields, edit (content, order, optional visibility, template), missing-field preview, review with fingerprint, automatic review reset on edit, database check that a reviewed draft has fingerprint and reviewer.
 Not in 4B: PDF rendering and the export gate (4C).
+## Phase 4C-1: Export gate
+Status: COMPLETE, OWNER VERIFIED. CvExportGateTest passing, scripts\check.ps1 ALL CHECKS PASSED, committed and pushed.
+Open: PDF renderer choice (4C-2), templates and fixture tests (4C-3).
+Known issue: the cv_exports append-only trigger reuses the stage_history function, so its error text says "stage_history is append-only". Protection is correct. Cosmetic fix is planned in 4C-3.
