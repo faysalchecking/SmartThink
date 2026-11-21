@@ -95,5 +95,6 @@ Route::prefix('v1')->group(function (): void {
             Route::patch('/cv-drafts/{draft}', [CvDraftController::class, 'update'])->name('cv-drafts.update');
             Route::post('/cv-drafts/{draft}/review', [CvDraftController::class, 'review'])->name('cv-drafts.review');
             Route::get('/cv-drafts/{draft}/preview', [CvDraftController::class, 'preview'])->name('cv-drafts.preview');
+            Route::post('/cv-drafts/{draft}/export', [CvDraftController::class, 'export'])->name('cv-drafts.export');
         });
 });

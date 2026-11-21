@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modules\Cv\Rendering\CvPdfRenderer;
+use App\Modules\Cv\Rendering\UnconfiguredPdfRenderer;
 use App\Modules\Tenancy\Context\TenantContext;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // One tenant context per request, so it can never leak into the next request.
         $this->app->scoped(TenantContext::class);
+        $this->app->bind(CvPdfRenderer::class, UnconfiguredPdfRenderer::class);
     }
 
     public function boot(): void

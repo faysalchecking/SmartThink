@@ -7,6 +7,7 @@ use App\Modules\Cv\Http\Requests\CvDraftRequest;
 use App\Modules\Cv\Http\Resources\CvDraftResource;
 use App\Modules\Cv\Models\CvDraft;
 use App\Modules\Cv\Services\CvDraftService;
+use App\Modules\Cv\Services\CvExportService;
 use App\Modules\Cv\Support\CvLayout;
 use App\Modules\Recruitment\Models\Candidate;
 use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
@@ -15,7 +16,10 @@ use Illuminate\Http\Request;
 
 final class CvDraftController extends Controller
 {
-    public function __construct(private readonly CvDraftService $drafts) {}
+    public function __construct(
+        private readonly CvDraftService $drafts,
+        private readonly CvExportService $exports,
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -70,6 +74,20 @@ final class CvDraftController extends Controller
     public function preview(Request $request): JsonResponse
     {
         return response()->json(['data' => CvLayout::build($this->draft($request))]);
+    }
+
+    public function export(Request $request): JsonResponse
+    {
+        $draft = $this->draft($request);
+        $companyId = ResolveCompany::membership($request)->company_id;
+
+        $export = $this->exports->export($draft, $this->actorId($request), $companyId);
+
+        return response()->json(['data' => [
+            'id' => $export->id,
+            'cv_draft_id' => $export->cv_draft_id,
+            'size_bytes' => $export->size_bytes,
+        ]], 201);
     }
 
     private function candidate(Request $request): Candidate
