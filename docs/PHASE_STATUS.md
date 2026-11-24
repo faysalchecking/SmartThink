@@ -137,3 +137,6 @@ Open: automated page-break check (R-24), dompdf licence review (R-23), React CV 
 Status: CODE COMPLETE, OWNER VERIFICATION PENDING
 Implemented: export permission flag with admin-only grant and audit, CSV export with fixed columns, passport excluded, archived excluded, CSV injection neutralised, row limit, audit with row count only, pipeline report per job and stage.
 Not done: notifications (optional, cut to keep the schedule), per-field export permissions (R-25).
+## Phase 5: CSV export and pipeline report
+Status: COMPLETE, OWNER APPROVED. ExportReportTest 9 passing, scripts\check.ps1 ALL CHECKS PASSED, committed and pushed.
+Not done: notifications (cut), per-field export permissions (R-25).

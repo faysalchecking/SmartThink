@@ -4,6 +4,7 @@ use App\Modules\Identity\Http\Middleware\EnsureAccountActive;
 use App\Modules\Tenancy\Http\Middleware\EnsurePlatformAdmin;
 use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
 use App\Support\Http\ApiErrorRenderer;
+use App\Support\Http\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Sanctum SPA mode: session cookie plus CSRF for first-party frontend origins.
         $middleware->statefulApi();
+
+        // Applied to every response, including errors.
+        $middleware->append(SecurityHeaders::class);
 
         $middleware->alias([
             'active' => EnsureAccountActive::class,
