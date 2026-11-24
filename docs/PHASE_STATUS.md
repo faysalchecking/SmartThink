@@ -130,3 +130,10 @@ Not in 4B: PDF rendering and the export gate (4C).
 Status: COMPLETE, OWNER VERIFIED. CvExportGateTest passing, scripts\check.ps1 ALL CHECKS PASSED, committed and pushed.
 Open: PDF renderer choice (4C-2), templates and fixture tests (4C-3).
 Known issue: the cv_exports append-only trigger reuses the stage_history function, so its error text says "stage_history is append-only". Protection is correct. Cosmetic fix is planned in 4C-3.
+## Phase 4: Documents and CV
+Status: COMPLETE, OWNER APPROVED (2026-11-04). Evidence: check.ps1 ALL CHECKS PASSED, 121 backend tests, owner review of fixture PDFs.
+Open: automated page-break check (R-24), dompdf licence review (R-23), React CV screens.
+## Phase 5: CSV export and pipeline report
+Status: CODE COMPLETE, OWNER VERIFICATION PENDING
+Implemented: export permission flag with admin-only grant and audit, CSV export with fixed columns, passport excluded, archived excluded, CSV injection neutralised, row limit, audit with row count only, pipeline report per job and stage.
+Not done: notifications (optional, cut to keep the schedule), per-field export permissions (R-25).

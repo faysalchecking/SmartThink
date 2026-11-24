@@ -69,3 +69,8 @@ Last updated: 2026-10-29
 | D-40 | Review stores a SHA-256 fingerprint of content, section order, visibility and template. Any later change clears the review. The 4C export must check the fingerprint before rendering | Stops a PDF being produced from content that was not reviewed | Active |
 | D-41 | Template keys are fixed in code (classic, modern, compact). Rendering is added in 4C | Keeps templates deterministic and testable | Active |
 | D-42 | Passport number is never copied into a CV | Least exposure of the most sensitive identifier | Active |
+| D-47 | Export permission is a flag on the membership. Company admins always have it; employees need it granted by an admin. Changes are audited | Explicit permission (EX-02) without a full role editor yet | Active |
+| D-48 | CSV cells beginning with = + - @ or a tab or carriage return are prefixed with an apostrophe. The file starts with a UTF-8 BOM | Blocks CSV formula injection; BOM keeps Bangla names readable in Excel | Active |
+| D-49 | Exports are capped at 5,000 rows and never include passport numbers or archived candidates. The audit entry stores the row count only | Limits bulk exfiltration; keeps personal data out of logs | Active |
+| D-50 | Pipeline report counts active applications only, per job and stage, within the company scope | Placed, rejected and withdrawn are historical, not pipeline load | Active |
+| R-25 | Export has no per-field permissions yet. An admin who grants export gives access to all permitted fields | Acceptable for MVP; revisit with the permission model | Open |

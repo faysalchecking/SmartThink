@@ -8,9 +8,11 @@ use App\Modules\Recruitment\Http\Controllers\ApplicationController;
 use App\Modules\Recruitment\Http\Controllers\CandidateController;
 use App\Modules\Recruitment\Http\Controllers\ClientController;
 use App\Modules\Recruitment\Http\Controllers\DashboardController;
+use App\Modules\Recruitment\Http\Controllers\ExportController;
 use App\Modules\Recruitment\Http\Controllers\InterviewController;
 use App\Modules\Recruitment\Http\Controllers\JobOrderController;
 use App\Modules\Recruitment\Http\Controllers\PipelineStageController;
+use App\Modules\Recruitment\Http\Controllers\ReportController;
 use App\Modules\Tenancy\Http\Controllers\CompanyController;
 use App\Modules\Tenancy\Http\Controllers\InvitationController;
 use App\Modules\Tenancy\Http\Controllers\MemberController;
@@ -96,5 +98,9 @@ Route::prefix('v1')->group(function (): void {
             Route::post('/cv-drafts/{draft}/review', [CvDraftController::class, 'review'])->name('cv-drafts.review');
             Route::get('/cv-drafts/{draft}/preview', [CvDraftController::class, 'preview'])->name('cv-drafts.preview');
             Route::post('/cv-drafts/{draft}/export', [CvDraftController::class, 'export'])->name('cv-drafts.export');
+            Route::get('/exports/candidates.csv', [ExportController::class, 'candidates'])->name('exports.candidates');
+            Route::get('/reports/pipeline', [ReportController::class, 'pipeline'])->name('reports.pipeline');
+            Route::patch('/members/{member}/export-permission', [MemberController::class, 'setExportPermission'])
+                ->name('members.export-permission');
         });
 });

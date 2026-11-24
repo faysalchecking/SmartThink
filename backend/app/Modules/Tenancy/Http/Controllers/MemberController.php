@@ -3,6 +3,7 @@
 namespace App\Modules\Tenancy\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Audit\Services\AuditLogger;
 use App\Modules\Tenancy\Enums\CompanyRole;
 use App\Modules\Tenancy\Enums\MembershipStatus;
 use App\Modules\Tenancy\Http\Middleware\ResolveCompany;
@@ -60,5 +61,34 @@ final class MemberController extends Controller
         );
 
         return MembershipResource::make($updated)->response();
+    }
+
+    /**
+     * Grants or removes the export permission. Only a company admin can call this (D-47).
+     */
+    public function setExportPermission(Request $request, AuditLogger $audit): JsonResponse
+    {
+        $admin = $this->requireCompanyAdmin($request);
+        $data = $request->validate(['can_export' => ['required', 'boolean']]);
+        $memberId = $this->routeUuid($request, 'member');
+
+        $target = Membership::query()
+            ->where('company_id', $admin->company_id)
+            ->where('id', $memberId)
+            ->firstOrFail();
+
+        $target->forceFill(['can_export' => (bool) $data['can_export']])->save();
+
+        $audit->record(
+            action: 'membership.export_permission_changed',
+            result: 'success',
+            targetType: 'membership',
+            targetId: $target->id,
+            actorId: $this->actorId($request),
+            companyId: $admin->company_id,
+            metadata: ['can_export' => (bool) $data['can_export']],
+        );
+
+        return MembershipResource::make($target)->response();
     }
 }

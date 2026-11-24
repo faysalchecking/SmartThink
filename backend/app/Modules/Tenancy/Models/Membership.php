@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property CompanyRole $role
  * @property MembershipStatus $status
+ * @property bool $can_export
  * @property-read Company $company
  * @property-read User $user
  */
@@ -31,7 +32,16 @@ class Membership extends Model
         return [
             'role' => CompanyRole::class,
             'status' => MembershipStatus::class,
+            'can_export' => 'boolean',
         ];
+    }
+
+    /**
+     * Company admins can always export. Employees need the flag, which only an admin can set (D-47).
+     */
+    public function canExport(): bool
+    {
+        return $this->role->isCompanyAdmin() || $this->can_export;
     }
 
     /** @return BelongsTo<Company, $this> */
