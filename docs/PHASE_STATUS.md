@@ -140,3 +140,21 @@ Not done: notifications (optional, cut to keep the schedule), per-field export p
 ## Phase 5: CSV export and pipeline report
 Status: COMPLETE, OWNER APPROVED. ExportReportTest 9 passing, scripts\check.ps1 ALL CHECKS PASSED, committed and pushed.
 Not done: notifications (cut), per-field export permissions (R-25).
+## Phase 6A and 6B: Security and dependency audit
+Status: COMPLETE, PENDING OWNER APPROVAL
+- Route audit: 3 public routes (health, login, invitation accept); all other routes behind auth and account-active; all company routes behind ResolveCompany; all platform routes behind platform admin.
+- Security headers: nosniff, DENY framing, strict referrer, CSP default-src none, HSTS in production.
+- Laravel 13.40.0 and Symfony 8.1.11 (fixes the advisories reported on 2026-11-04 and later).
+- npm audit --omit=dev: 0 vulnerabilities.
+Open: 6C performance, 6D backup and restore.
+## Phase 6A and 6B: Security and dependency audit
+Status: COMPLETE, OWNER APPROVED
+- Route audit: 3 public routes (health, login, invitation accept). All other routes require auth and an active account. Company routes require ResolveCompany. Platform routes require platform admin.
+- Security headers: nosniff, DENY framing, strict referrer, CSP default-src none, HSTS in production. Test: SecurityHeadersTest (2).
+- Laravel 13.40.0 and Symfony 8.1.11, both older than 14 days at update time.
+- composer audit: no advisories. npm audit --omit=dev: 0 vulnerabilities.
+## Phase 6C: Performance
+Status: MEASURED, PASSES TARGET (local, 10,000 candidates x 3 companies, 2026-11-28)
+Medians: candidates list 2.7 ms, search 9.1 ms, jobs list 1.4 ms, pipeline report 8.6 ms, dashboard 7.1 ms. Target was under 300 ms.
+Known limit: unanchored ILIKE search will need a pg_trgm GIN index at much larger volume. Not added, because not needed at measured volume.
+Limitation: measured at the database layer, not over HTTP. Production numbers come from Phase 7.
